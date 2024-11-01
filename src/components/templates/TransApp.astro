@@ -1,0 +1,116 @@
+---
+const { transdata } = Astro.props;
+
+---
+
+<section class="why-morris-hero pb-5 mt-md read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        <div class="col-lg-7 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            <div class="pe-6 text-black" set:html={transdata.acf.hero_contents} />
+        </div>
+        <div class="col-lg-5 col-sm-12 d-flex flex-column align-items-center justify-content-start">
+          {transdata.acf.hero_image && (
+            <div 
+                set:html={transdata.acf.hero_image} 
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="trans-approach pb-0 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+        <div class="row">
+            {transdata.acf.second_section_contents && (
+                <div class="col-12 mb-0 mb-md-3">
+                    <div 
+                    set:html={transdata.acf.second_section_contents} />
+                </div> 
+            )}
+        </div>
+    </div>
+</section>
+
+
+<section class="trans-approach-features pb-50 mt-sm read-aloud">
+    <div class="container">
+        
+        <div class="row ps-4 pe-4">
+            <h2 set:html={transdata.acf.third_section_titleheading} />
+        </div>
+        
+        <div class="row">
+            {transdata.acf.transdisciplinary_team_approach && transdata.acf.transdisciplinary_team_approach.map((featItem, index) => (
+                
+                <div class="col-12 mb-0 mb-md-3">
+                    <h3 class="title fs-5 lh-sm pt-0 pb-3 fw-bolder" set:html={featItem.transdisciplinary_team_approach_titleheading} />
+                    <div class="card pb-1" key={index}>
+                        <div class="card-body">  
+                            <div class="card-text" set:html={featItem.transdisciplinary_team_approach_descriptions} />
+                        </div>
+                    </div>
+                </div> 
+            
+            ))}
+        </div>
+    </div>
+</section>
+
+<section class="trans-approach-fourth pt-50 pb-50 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+        <div class="row">
+            <div class="text-white" set:html={transdata.acf.fourth_section_contents} />
+        </div>
+    </div>
+</section>
+
+<style is:inline>
+    h1 {
+        padding-bottom: 20px;
+    }
+    .trans-approach-features h3.title {
+        display: inline-block;
+    }
+    .trans-approach-features h3.title:first-letter {
+        font-size: 65px;
+    }
+    .card {
+        background: linear-gradient(to bottom, #ffffff, #eeeded);
+        background: -webkit-linear-gradient(top, #ffffff, #eeeded);
+        background: -moz-linear-gradient(top, #ffffff, #eeeded);
+        background: -ms-linear-gradient(top, #ffffff, #eeeded);
+        background: -o-linear-gradient(top, #ffffff, #eeeded);
+        padding: 20px;
+        border-radius: 30px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+        cursor: text
+    }
+    .card-text {
+        color: #000;
+        font-size: 18px;
+    }
+    .card-text ul {
+        padding-left: 2rem;
+    }
+    .card-text ol li {
+        list-style-type: upper-alpha;
+    }
+    .card-text ul li {
+        list-style-type: disc;
+    }
+    .trans-approach ol li {
+        padding-bottom: 20px;
+    }
+    .trans-approach ol li::marker {
+        font-weight: 700;
+        font-size: 20px;
+        color: #262261;
+    }
+    .trans-approach-fourth {
+        background-color: #413C86;
+    }
+</style>

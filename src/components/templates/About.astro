@@ -1,0 +1,295 @@
+---
+//import "video.js/dist/video-js.min.css";
+//import Faqs from '../Faq.astro';
+import '../../styles/swiper-bundle.min.css';
+const { aboutdata } = Astro.props;
+
+---
+
+<section class="about-hero pb-0 mt-md read-aloud">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start pe-lg-5">
+                <h1 set:html={aboutdata.title.rendered} />
+                <article set:html={aboutdata.acf.about_descriptions} />
+            </div>
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-end justify-content-end">
+                {aboutdata.acf.about_featured_image && (
+                    <img 
+                        class="heroImage" 
+                        src={aboutdata.acf.about_featured_image} 
+                        width="304" 
+                        height="287"
+                        alt="" 
+                    />
+                )}
+                {aboutdata.acf.about_video && (
+                    <div 
+                        class="slideRight" 
+                        set:html={aboutdata.acf.about_video} 
+                    /> 
+                )}
+                
+                
+                {/* <video
+                    id="my-video"
+                    class="rounded-5 video-js vjs-fluid vjs-16-9"
+                    width="560"
+                    height="315"
+                    data-setup=`{"controls": true, "preload": "none"}`
+                >
+                <source src="https://astromorrison.wpenginepowered.com/wp-content/uploads/2024/02/The-Morris-Center-A-Proven-Record-of-Success.mp4" type="video/mp4" />
+                </video> */}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-second pb-0 mt-md read-aloud">
+    
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-sm-12 d-flex flex-column align-items-start justify-content-start">
+                <h2 set:html={aboutdata.acf.carousel_heading} />
+            </div>
+        </div>
+    </div>    
+    <div class="container-fluid">
+    
+        <div class="swiper aboutSwiper">
+          <div class="swiper-wrapper">
+            {aboutdata.acf.carousel.map((carouselItem, index) => (
+              <div class="swiper-slide" key={index}>
+                <div class="slideTitle" set:html={carouselItem.carousel_title} />
+                <div class="slideDescr" set:html={carouselItem.carousel_descriptions} />
+              </div>
+            ))}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+        
+  
+    </div>
+
+</section>
+
+<section class="about-third pb-0 mt-md read-aloud">
+    <div class="container ps-4 pe-4">
+        <!-- <div class="row">
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+                <h2 set:html={aboutdata.acf.heading_third_section} />
+                <article class="pe-5" set:html={aboutdata.acf.column_one} />
+            </div>
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-end justify-content-center pt-3">
+                <article set:html={aboutdata.acf.column_two} />
+                <div class="col-12 d-flex flex-column align-items-start justify-content-center">
+                    <a class="btn btn-primary btn-lg mt-5 mb-3" type="button" href={aboutdata.acf.button_url} set:html={aboutdata.acf.button_label} />
+                </div>
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="col-sm-12 d-flex flex-column align-items-start justify-content-start">
+                <h2 set:html={aboutdata.acf.heading_third_section} />
+            </div>
+            <div class="col-sm-12 d-flex flex-column align-items-end justify-content-center pt-3">
+                <article set:html={aboutdata.acf.third_section_contents} />
+                <div class="col-12 d-flex flex-column align-items-start justify-content-center">
+                    <a class="text-to-read btn btn-primary btn-lg mt-5 mb-3" type="button" href={aboutdata.acf.button_url} set:html={aboutdata.acf.button_label} />
+                </div>
+            </div>
+        </div>
+</section>
+
+
+<section class="about-fourth pb-0 mt-md read-aloud">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12 d-flex flex-column align-items-start justify-content-start pb-5">
+                <article set:html={aboutdata.acf.team_information} />
+            </div>
+        </div>
+        {/*
+        <div class="row">
+            {aboutdata.acf.teams.map((teamItem, index) => (
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="card text-center" key={index}>
+                    <div class="card text-center" key={index} data-bs-toggle="modal" data-bs-target={`#staticBackdrop${index}`} >
+                        <img 
+                            class="mx-auto"
+                            src={teamItem.team_image} 
+                            width="150" 
+                            height="150" 
+                        />
+                        <div class="card-body">  
+                            <h5 class="card-title" set:html={teamItem.team_name} />
+                            <p class="card-text" set:html={teamItem.team_positiontitle} />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id={`staticBackdrop${index}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-4 d-flex flex-column align-items-center justify-content-center">
+                                            <div class="card text-center">
+                                                <img 
+                                                    class="mx-auto"
+                                                    src={teamItem.team_image} 
+                                                    width="150" 
+                                                    height="150" 
+                                                />
+                                                <div class="card-body">  
+                                                    <h5 class="card-title" set:html={teamItem.team_name} />
+                                                    <p class="card-text" set:html={teamItem.team_positiontitle} />
+                                                    {teamItem.team_email && (
+                                                        <a href={"mailto:" + teamItem.team_email} class="card-text">{teamItem.team_email}</a>
+
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-lg-8 d-flex flex-column align-items-start justify-content-start">
+                                            <p class="card-text" set:html={teamItem.team_details} />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>   
+              ))}
+        </div>
+        */}
+    </div>
+</section>
+
+
+<!-- <section class="about-fifth pb-0 mt-sm read-aloud">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12 pb-5">
+                <a class="btn btn-primary btn-lg mt-5 mb-3 px-5" type="button" href="/faqs/">Learn <span>More</span></a>
+
+                <h2 set:html={aboutdata.acf.faq_titleheading} />
+
+                <Faqs></Faqs>  -->
+                <!-- <div class="accordion" id="accordionExample">
+                {aboutdata.acf.faq_items.map((faqItems, index) => (
+                    
+                    <div class="accordion-item" key={index}>
+                        <h3 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${index}`} aria-expanded="true" aria-controls={`#collapse${index}`}
+                                set:html={faqItems.faq_title} />
+                        </h3>
+                        <div id={`collapse${index}`} class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <p set:html={faqItems.faq_descriptions} />
+                            </div>
+                        </div>
+                    </div>
+                ))}
+                </div> -->
+
+            <!-- </div>
+        </div>
+    </div>
+</section> -->
+
+
+<style is:global>
+    .swiper {
+        width: 100%;
+        height: 100%;
+        padding-top: 20px;
+    }
+
+  .aboutSwiper .swiper-slide {
+      text-align: center;
+      background: linear-gradient(to bottom, #ffffff, #eeeded);
+      background: -webkit-linear-gradient(top, #ffffff, #eeeded);
+      background: -moz-linear-gradient(top, #ffffff, #eeeded);
+      background: -ms-linear-gradient(top, #ffffff, #eeeded);
+      background: -o-linear-gradient(top, #ffffff, #eeeded);
+      background: #EBECF0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 50px 25px;
+      border-radius: 30px;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+      margin-bottom: 80px;
+      transition: all 0.3s ease-in-out;
+    }
+
+  .aboutSwiper .swiper-slide:hover {
+      transform: translate(0%, -5%);
+    }
+
+  .aboutSwiper .slideTitle {
+      font-size: 24px;
+      font-weight: 600;
+      color: #000;
+      padding-bottom: 15px;
+    }
+  .aboutSwiper .slideDescr {
+      border-top: 2px solid #009345;
+      padding-top: 40px;
+      line-height: 28px;
+      font-size: 16px;
+    }
+
+    .modal-header {
+        border-bottom: 0;
+    }
+
+    .about-third .list-group-item {
+        line-height: 20px;
+    }
+    .video-js {
+        border-radius: 20px;
+    }
+</style>
+
+
+<script type="text/partytown" src="/scripts/swiper-bundle.min.js"></script>
+
+<script type="text/partytown">
+  const swiper = new Swiper(".aboutSwiper", {
+    slidesPerView: 3,
+    spaceBetween: 20,
+    //loop: true,
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 20
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 30
+      },
+      1200: {
+        slidesPerView: 3,
+        spaceBetween: 40
+      }
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    // autoplay: {
+    //   delay: 4500,
+    //   disableOnInteraction: false,
+    // },
+  });
+</script>

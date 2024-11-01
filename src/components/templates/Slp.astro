@@ -1,0 +1,151 @@
+---
+const { slpdata } = Astro.props;
+
+---
+
+<section class="otherapy-hero pb-5 mt-md read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        <div class="col-lg-7 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            <div class="pe-6 text-black" set:html={slpdata.acf.hero_contents} />
+        </div>
+        <div class="col-lg-5 col-sm-12 d-flex flex-column align-items-center justify-content-start pt-5 pt-lg-0">
+          {slpdata.acf.hero_image && (
+            <img 
+                class="rounded-5" 
+                src={slpdata.acf.hero_image.url} 
+                alt={slpdata.acf.hero_image.alt}
+                width={slpdata.acf.hero_image.width}
+                height={slpdata.acf.hero_image.height}
+            />
+          )}
+          {slpdata.acf.hero_video && (
+            <div 
+                class="slideRight" 
+                set:html={slpdata.acf.hero_video} 
+            /> 
+        )}
+        </div>
+      </div>
+    </div>
+</section>
+
+
+<section class="otherapy-second pb-lg-5 pb-md-0 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-center justify-content-center">
+          {slpdata.acf.third_section_image && (
+            <img 
+                class="rounded-5" 
+                src={slpdata.acf.third_section_image.url} 
+                alt={slpdata.acf.third_section_image.alt}
+                width={slpdata.acf.third_section_image.width}
+                height={slpdata.acf.third_section_image.height}
+            />
+          )}
+        </div>
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center pt-5 pt-lg-0">
+            <div class="ps-0 ps-lg-5 text-black" set:html={slpdata.acf.third_contents} />
+
+            {slpdata.acf.multiple_column_2 === 'Yes' ? (
+                <div class="row py-3 ps-0 ps-lg-5">
+                    <div class="col-12 col-md-6 col-lg-6 featList">
+                        <ul class="list-group">
+                            {slpdata.acf.featured_list_third && slpdata.acf.featured_list_third.map((featuredItem, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                <div style="display: flex; align-items: center;">
+                                <span style="flex:1;margin-left:10px;">{featuredItem.featured_item}</span></div></li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 featList">
+		                <ul class="list-group">
+                            {slpdata.acf.featured_list_3 && slpdata.acf.featured_list_3.map((featuredItem3, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                <div style="display: flex; align-items: center;">
+                                <span style="flex:1;margin-left: 10px;">{featuredItem3.featured_item}</span></div></li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                ) : (
+                <div class="row ps-0 ps-lg-5 py-3">
+                    <div class="col-12 featList">
+                        <ul class="list-group">
+                            {slpdata.acf.featured_list_third && slpdata.acf.featured_list_third.map((featuredItem4, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                 {featuredItem4.featured_item} </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+        )} 
+
+        {slpdata.acf.third_contents_extra && (
+            <div class="ps-0 ps-lg-5" set:html={slpdata.acf.third_contents_extra} />
+        )}
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="otherapy-third pb-5 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+        <div class="row">
+            <div class="col-12 d-flex flex-column align-items-start justify-content-center">
+            <div class="text-black" set:html={slpdata.acf.second_contents} />
+
+                {slpdata.acf.multiple_column === 'Yes' ? (
+                        <div class="row py-1 w-100">
+                            <div class="col-12 col-md-6 col-lg-6 featList">
+                                <ul class="list-group">
+                                    {slpdata.acf.featured_list && slpdata.acf.featured_list.map((featuredItem, index) => (
+                                        <li key={index}
+                                        class="list-group-item">
+                                        {featuredItem.featured_item} </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 featList">
+                                <ul class="list-group">
+                                    {slpdata.acf.featured_list_2 && slpdata.acf.featured_list_2.map((featuredItem2, index) => (
+                                        <li key={index}
+                                        class="list-group-item">
+                                        {featuredItem2.featured_item} </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+
+                        ) : (
+                        <div class="row py-1">
+                            <div class="col-12 featList">
+                                <ul class="list-group">
+                                    {slpdata.acf.featured_list && slpdata.acf.featured_list.map((featuredItem, index) => (
+                                        <li key={index}
+                                        class="list-group-item">
+                                        {featuredItem.featured_item} </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                )}    
+            </div>
+        </div>
+        <div class="row py-1 w-100">
+            {slpdata.acf.second_contents_extra && (
+                <div class="ps-0 pt-3" set:html={slpdata.acf.second_contents_extra} />
+            )}
+        </div>
+    </div>    
+</section>
+
+
+
+

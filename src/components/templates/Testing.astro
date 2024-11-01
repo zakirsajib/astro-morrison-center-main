@@ -1,0 +1,373 @@
+---
+const { testingdata } = Astro.props;
+
+---
+
+<style is:inline>
+    video {
+        border-radius: 20px;
+    }
+    .card {
+        background: linear-gradient(to bottom, #ffffff, #eeeded);
+        background: -webkit-linear-gradient(top, #ffffff, #eeeded);
+        background: -moz-linear-gradient(top, #ffffff, #eeeded);
+        background: -ms-linear-gradient(top, #ffffff, #eeeded);
+        background: -o-linear-gradient(top, #ffffff, #eeeded);
+        padding: 20px;
+        border-radius: 30px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+        cursor: text
+    }
+    .testing-hero .card {
+        padding: 10px 20px;
+    }
+
+    .card-text {
+        color: #000;
+        font-size: 18px;
+    }
+    .testing-phase-1-summary a,
+    .testing-phase-2-summary a,
+    .testing-phase-1 a {
+        border-bottom: 2px solid #009345;
+    }
+    h4 {
+        font-size: 18px;
+    }
+    .phase-one-evaluation .card,
+    .testing-phase-2 .card {
+        padding: 20px 40px;
+    }
+    .phase-one-evaluation p {
+        padding-bottom: 20px;
+        padding-top: 20px;
+    }
+    span.number-three,
+    span.number-four {
+        position: relative;
+        padding-left: 45px;
+        margin-left: 0px;
+        display: block;
+    }
+    span.number-three::before,
+    span.number-four::before {
+        content: "3";
+        position: absolute;
+        left: 0px;
+        color: #008244;
+        font-size: 48px;
+        top: 15px;
+    }
+    span.number-four::before {
+        content: "4";
+    }
+
+    .testing-phase-2 span.number-one, 
+    .testing-phase-2 span.number-two,
+    .testing-phase-2 span.number-three, 
+    .testing-phase-2 span.number-four {
+        padding-bottom: 30px;
+    }
+
+    .testing-phase-1-summary,
+    .testing-phase-2-summary {
+        background-color: #413C86;
+    }
+
+    .testing-phase-1-summary .card,
+    .testing-phase-2-summary .card {
+        height: 100%;
+    }
+
+    .testing-phase-1-summary .card-text ul,
+    .testing-phase-2-summary .card-text ul {
+        padding-top: 1rem;
+    }
+    .testing-phase-1-summary .card-text ul li,
+    .testing-phase-2-summary .card-text ul li,
+    .featList li {
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+    .featList li::before {
+        top: 0;
+        transform: translate(-50%, 50%);
+    }
+    
+</style>
+
+
+<section class="testing-hero pb-5 mt-md read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            {testingdata.acf.left_section && (
+                <div class="pe-5 text-black" set:html={testingdata.acf.left_section} />
+            )}
+        </div>
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-content-around justify-content-start">
+            {testingdata.acf.right_section && (
+                <div set:html={testingdata.acf.right_section} />
+            )}    
+            { /* <video autoplay loop muted playsinline>
+                  <source src={testingdata.acf.right_section} type="video/mp4" />
+                  Your browser does not support the video tag.
+            </video> */}
+              
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="card mb-3">
+            <div class="row g-0 d-flex flex-row align-items-center justify-content-center">
+              <div class="col-lg-2">
+                {testingdata.acf.intro_text && (
+                    <h3 
+                        class="card-title text-center" set:html={testingdata.acf.intro_text}
+                    />
+                )}
+              </div>
+              <div class="col-lg-10">
+                <div class="card-body">
+                    {testingdata.acf.intro_descriptions && (
+                        <div 
+                            class="card-text" set:html={testingdata.acf.intro_descriptions} 
+                        />
+                    )}
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+
+<section class="testing-phase-1 pb-5 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        <div class="col-12">
+            {testingdata.acf.phase_1_contents && (
+                <div 
+                    set:html={testingdata.acf.phase_1_contents} 
+                />
+            )}
+        </div>
+
+        <div class="col-12">
+            <div class="card mb-5 mt-3">
+                <div class="row g-0 d-flex flex-row align-items-start justify-content-center">
+                    {testingdata.acf.phase_1_evaluation_components.map((componentItem, index) => (
+                        <div class="col-lg-6" key={index}>
+                            <div 
+                                class="card-body" set:html={componentItem.component_one}
+                            />
+                        </div>
+                        <div class="col-lg-6">
+                            <div 
+                                class="card-body" set:html={componentItem.component_two}
+                            />
+                        </div>
+                    ))}
+                </div>
+              </div>
+        </div>
+
+
+        <div class="col-12">
+            {testingdata.acf.phase_1_more_contents && (
+                <div 
+                    set:html={testingdata.acf.phase_1_more_contents} 
+                />
+            )}
+        </div>
+
+        <div class="col-12">
+            {testingdata.acf.phase_1_after_contents && (
+                <div 
+                    set:html={testingdata.acf.phase_1_after_contents} 
+                />
+            )}
+        </div>
+        <div class="col-12 phase-one-evaluation">
+            {testingdata.acf.phase_1_evaluation_results && (
+                <div 
+                    class="card mt-4 mb-5" 
+                    set:html={testingdata.acf.phase_1_evaluation_results} 
+                />
+            )}
+        </div>
+        <div class="col-12">
+            {testingdata.acf.phase_1_after_contents_copy && (
+                <div 
+                    set:html={testingdata.acf.phase_1_after_contents_copy} 
+                />
+            )}
+        </div>
+
+
+      </div>
+    </div>
+</section>
+
+<section class="testing-phase-1-summary pt-50 pb-50 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        {testingdata.acf.phase_1_summary && (
+            <h2 class="text-white text-center" set:html={testingdata.acf.phase_1_summary} />
+        )}
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            {testingdata.acf.phase_1_summary_1 && (
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-text text-black" set:html={testingdata.acf.phase_1_summary_1} />
+                    </div>
+                </div>
+            )}
+        </div>
+        <div class="col-lg-4 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            {testingdata.acf.phase_1_summary_2 && (
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-text text-black" set:html={testingdata.acf.phase_1_summary_2} />
+                    </div>
+                </div>
+            )}
+        </div>
+        <div class="col-lg-4 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            {testingdata.acf.phase_1_summary_3 && (
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-text text-black" set:html={testingdata.acf.phase_1_summary_3} />
+                    </div>
+                </div>
+            )}
+        </div>
+      </div>
+    </div>
+</section>
+
+
+<section class="testing-phase-2 pt-5 pb-5 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        <div class="col-12">
+            {testingdata.acf.phase_2_contents && (
+                <div 
+                    set:html={testingdata.acf.phase_2_contents} 
+                />
+            )}
+        </div>
+
+        <div class="col-12">
+            {testingdata.acf.phase_2_testings && (
+                <div class="card py-5 mb-5 mt-4" 
+                    set:html={testingdata.acf.phase_2_testings} 
+                />
+            )}
+        </div>
+
+        <div class="col-12">
+            {testingdata.acf.phase_2_contents_copy && (
+                <div 
+                    set:html={testingdata.acf.phase_2_contents_copy} 
+                />
+            )}
+        </div>
+      </div>
+    </div>
+</section>
+
+
+<section class="testing-phase-2-summary pt-50 pb-50 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        {testingdata.acf.phase_2_summary_heading && (
+            <h2 class="text-white text-center" set:html={testingdata.acf.phase_2_summary_heading} />
+        )}
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            {testingdata.acf.phase_2_summary_1 && (
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-text text-black" set:html={testingdata.acf.phase_2_summary_1} />
+                    </div>
+                </div>
+            )}
+        </div>
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            {testingdata.acf.phase_2_summary_2 && (
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-text text-black" set:html={testingdata.acf.phase_2_summary_2} />
+                    </div>
+                </div>
+            )}
+        </div>
+      </div>
+    </div>
+</section>
+
+
+  <!-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Videos
+      var videos = document.querySelectorAll("video");
+  
+      var videoOptions = {
+        root: null, // use the viewport as the root
+        rootMargin: "0px",
+        threshold: 0.5 // trigger when 50% of the video is visible
+      };
+  
+      var videoObserver = new IntersectionObserver(handleVideoIntersect, videoOptions);
+  
+      videos.forEach(function (video) {
+        videoObserver.observe(video);
+      });
+  
+      // Iframes
+      var iframes = document.querySelectorAll('.swiper-slide iframe');
+  
+      var iframeOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5 // Adjust this threshold as needed
+      };
+  
+      var iframeObserver = new IntersectionObserver(handleIframeIntersect, iframeOptions);
+  
+      iframes.forEach(function (iframe) {
+        iframeObserver.observe(iframe);
+      });
+  
+      function handleVideoIntersect(entries, observer) {
+        entries.forEach(function (entry) {
+          var video = entry.target;
+  
+          if (entry.isIntersecting) {
+            video.play(); // start playing when in viewport
+          } else {
+            video.pause(); // pause when not in viewport
+          }
+        });
+      }
+  
+      function handleIframeIntersect(entries, observer) {
+        entries.forEach(function (entry) {
+          var iframe = entry.target;
+  
+          if (entry.isIntersecting) {
+            var iframeSrc = iframe.getAttribute('data-src');
+            iframe.src = iframeSrc;
+            observer.unobserve(iframe);
+          }
+        });
+      }
+    });
+  </script> -->

@@ -1,0 +1,128 @@
+---
+const { servedata } = Astro.props;
+---
+
+<section class="who-we-serve-hero pb-50 mt-md read-aloud">
+    <div class="container ps-4 pe-4">
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+            <div class="pe-6 heroBox text-black" set:html={servedata.acf.hero_section} />
+        </div>
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-center justify-content-start">
+          {servedata.acf.hero_media && (
+            <div 
+                set:html={servedata.acf.hero_media} 
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="who-we-serve-second pb-5 read-aloud">
+    <div class="container ps-4 pe-4">
+      <div class="row">
+        <div class="col-sm-12 d-flex flex-column align-items-start justify-content-start">
+            <div class="pe-6 heroBox text-black" set:html={servedata.acf.who_we_serve_descriptions} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="who-we-serve-third py-5 read-aloud" id="oneToFour">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="pe-0 col-12 sectionTitle pb-4" set:html={servedata.acf.age_label} />
+            </div>
+        </div>
+        <div class="row">
+            {servedata.acf.warning_signs.map((perksItem, index) => (
+                <div class="col-sm-6 col-md-4 mb-3 card-group">
+                    <div class="card rounded-4 pb-4" key={index}>
+                        <div class="card-body">  
+                            <h3 class="card-title lh-md pb-1 fw-medium" set:html={perksItem.area_name} />
+                            <p class="card-text" set:html={perksItem.area_descriptions} />
+                        </div>
+                    </div>
+                </div> 
+            ))}
+        </div>
+    </div>
+  </section>
+  <section class="who-we-serve-third py-5 read-aloud" id="fourToEight">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="pe-0 col-12 sectionTitle pb-4" set:html={servedata.acf.age_label_4} />
+            </div>
+        </div>
+        <div class="row">
+            {servedata.acf.warning_signs_4_8.map((perksItem, index) => (
+                <div class="col-sm-6 col-md-4 mb-3 card-group">
+                    <div class="card rounded-4 pb-4" key={index}>
+                        <div class="card-body">  
+                            <h3 class="card-title lh-md pb-1 fw-medium" set:html={perksItem.area_name} />
+                            <p class="card-text" set:html={perksItem.area_descriptions} />
+                        </div>
+                    </div>
+                </div> 
+            ))}
+        </div>
+    </div>
+  </section>
+  <section class="who-we-serve-third py-5 read-aloud" id="nineToAdult">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="pe-0 col-12 sectionTitle pb-4" set:html={servedata.acf.age_label_9} />
+            </div>
+        </div>
+        <div class="row">
+            {servedata.acf.warning_signs_9.map((perksItem, index) => (
+                <div class="col-sm-6 col-md-4 mb-3 card-group">
+                    <div class="card rounded-4 pb-4" key={index}>
+                        <div class="card-body">  
+                            <h3 class="card-title lh-md pb-1 fw-medium" set:html={perksItem.area_name} />
+                            <p class="card-text" set:html={perksItem.area_descriptions} />
+                        </div>
+                    </div>
+                </div> 
+            ))}
+        </div>
+    </div>
+  </section>
+
+  <section class="who-we-serve-fourth pb-100 mt-md read-aloud">
+    <div class="container ps-4 pe-4">
+      <div class="row">
+        <div class="col-sm-12 d-flex flex-column align-items-start justify-content-start">
+            <div class="pe-6 heroBox text-black" set:html={servedata.acf.who_we_serve_descriptions_two} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    #oneToFour {
+        background-color: #262261;
+    }
+    #fourToEight {
+        background-color: #514D90;
+    }
+    #nineToAdult {
+        background-color: #7E7ABC;
+    }
+    .sectionTitle {
+        color: #fff;
+    }
+    .card {
+        background-color: #fff;
+    }
+    .card-body .card-title {
+        color: #008244;
+    }
+    .card-text {
+        color: #000;
+    }
+  </style>

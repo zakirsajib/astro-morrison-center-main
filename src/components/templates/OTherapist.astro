@@ -1,0 +1,195 @@
+---
+const { otherapistdata } = Astro.props;
+
+---
+
+<section class="oc-therapist-hero pb-0 mt-md read-aloud">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start pe-5">
+                <article set:html={otherapistdata.acf.ot_descriptions_copy} />
+            </div>
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-center justify-content-start">
+                {otherapistdata.acf.ot_featured_image && (
+                    <div class="slideRight"
+                        set:html={otherapistdata.acf.ot_featured_image} 
+                    />
+                )}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="oc-therapist-second pt-5 pb-0 mt-sm read-aloud">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12 d-flex flex-column align-items-start justify-content-start pb-3">
+                <article set:html={otherapistdata.acf.team_information} />
+            </div>
+        </div>
+        <div class="row">
+            {otherapistdata.acf.teams && otherapistdata.acf.teams.map((teamItem, index) => (
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="card text-center" key={index} data-bs-toggle="modal" data-bs-target={`#staticBackdrop${index}`} >
+                        <img 
+                            class="mx-auto rounded-circle"
+                            src={teamItem.team_image} 
+                            width="150" 
+                            height="150" 
+                        />
+                        <div class="card-body">  
+                            <h5 class="card-title" set:html={teamItem.team_name} />
+                            <p class="card-text" set:html={teamItem.team_positiontitle} />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id={`staticBackdrop${index}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-4 d-flex flex-column align-items-center justify-content-center">
+                                            <div class="card text-center">
+                                                <img 
+                                                    class="mx-auto rounded-circle"
+                                                    src={teamItem.team_image} 
+                                                    width="150" 
+                                                    height="150" 
+                                                />
+                                                <div class="card-body">  
+                                                    <h5 class="card-title" set:html={teamItem.team_name} />
+                                                    <p class="card-text" set:html={teamItem.team_positiontitle} />
+                                                    {teamItem.team_email && (
+                                                        <a href={"mailto:" + teamItem.team_email} class="card-text">{teamItem.team_email}</a>
+
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-lg-8 d-flex flex-column align-items-start justify-content-start">
+                                            <p class="card-text" set:html={teamItem.team_details} />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>   
+              ))}
+        </div>
+    </div>
+</section>
+
+<section class="oc-therapist-email-subs pt-5 pb-0 mt-sm read-aloud">
+    <div class="container">
+        <div class="row">
+            
+                
+                <div class="col-12 col-lg-6 mb-0 mb-md-3">
+                    
+                    <div class="card pb-1">
+                        <div class="card-body">
+                            <h3 class="card-title pb-2 mb-4">Sign Up to Learn More About The Morris Center
+                            </h3> 
+                            <div class="card-text">
+                                <form action="https://usebasin.com/f/<YOUR_FORM_ID>" method="POST">
+                                    <div>
+                                        <label>Email Address</label>
+                                        <input type="email" name="email" id="email" required class="form-control" />
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-primary btn-lg ps-5 pe-5 mt-3 mb-3 fw-medium text-uppercase" type="submit">Subscribe</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            
+        </div>
+    </div>
+</section>
+
+
+<section class="oc-therapist-third pb-50 mt-sm read-aloud">
+    <div class="container ps-4 pe-4">
+        {otherapistdata.acf.testimonials && otherapistdata.acf.testimonials.map((testItem, index) => (
+        <div class="row my-5" key={index}>
+            <div class="col-lg-4 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+                {testItem.testimonial_image && (
+                    <img 
+                        class="rounded-4 mb-3"
+                        src={testItem.testimonial_image} 
+                        width="400"
+                        height="400"
+                        alt=""
+                    />
+                )}
+            </div>
+            <div class="col-lg-8 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+                <article set:html={testItem.testimonial_details} />
+            </div>
+        </div>
+        ))}
+    </div>
+</section>
+
+<style is:inline>
+    .modal-header {
+        border-bottom: 0;
+    }
+
+    .about-third .list-group-item {
+        line-height: 20px;
+    }
+    .card-text {
+        line-height: 20px;
+    }
+    .card-title {
+        margin-bottom: 0.5rem;
+    }
+    strong {
+        color: #262261;
+    }
+
+    .oc-therapist-email-subs .card {
+        background: linear-gradient(to bottom, #ffffff, #eeeded);
+        background: -webkit-linear-gradient(top, #ffffff, #eeeded);
+        background: -moz-linear-gradient(top, #ffffff, #eeeded);
+        background: -ms-linear-gradient(top, #ffffff, #eeeded);
+        background: -o-linear-gradient(top, #ffffff, #eeeded);
+        padding: 20px;
+        border-radius: 30px;
+        border: 2px solid #262261;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+        cursor: text
+    }
+    .oc-therapist-email-subs .card:hover {
+        box-shadow: none;
+        border: 2px solid #262261;
+    }
+    .oc-therapist-email-subs .card-title {
+        border-bottom: 1px solid;
+        display: inline-block;
+    }
+    .oc-therapist-email-subs .card-text {
+        color: #000;
+        font-size: 18px;
+    }
+
+    .btn-lg {
+        font-size: 1rem;
+    }
+
+</style>

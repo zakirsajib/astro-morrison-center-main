@@ -1,0 +1,73 @@
+---
+import { getReadingTime } from "../lib/readingtime";
+const { post } = Astro.props;
+---
+
+
+<div class="card">
+    <a class='post-link' href={post.uri} aria-label={post.title}>
+    <img
+      class="card-img-top"
+      src={post?.featuredImage?.node?.mediaItemUrl}
+      alt={post?.featuredImage?.node?.altText}
+      srcset={post?.featuredImage?.node?.srcSet}
+      loading='lazy'
+      width={post?.featuredImage?.node?.mediaDetails?.width}
+      height={post?.featuredImage?.node?.mediaDetails?.height}
+    >
+    </a>
+    <div class="card-body">
+      <div class="metaWrapper">
+          <span><time datetime={post.date}>{new Date(post.date).toLocaleDateString()}</time></span>
+          <p class='post-details'>{getReadingTime(post.content)} min. to read</p>
+      </div>
+      <h4 class="card-title"><a class='post-link' href={post.uri} aria-label={post.title}>{post.title}</a></h4>
+      <p class="card-text" set:html={post.excerpt}></p>
+      <div class="metaWrapper">
+        { post.categories.nodes.map(category => {
+          return (<a class='btn btn-outline-danger' href={category.uri}>{category.name}</a>)
+        })}
+        <a class='btn btn-danger' href={post.uri} aria-label={post.title}>Read More</a>
+      </div>
+    </div>
+
+</div>
+
+
+<style>
+
+img {
+  max-width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.metaWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0px;
+}
+
+.card {
+  width: calc(50% - 10px);
+  margin: 5px;
+  box-sizing: border-box;
+}
+.card-title {
+  text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+  }
+}
+.post-details {
+  color: darkgrey;
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 0;
+}
+</style>

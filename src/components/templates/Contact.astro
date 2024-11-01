@@ -1,0 +1,168 @@
+---
+import { Image } from 'astro:assets';
+import mapPin from '../../img/pin.svg';
+import phoneAlt from '../../img/phone.svg';
+const { contactdata } = Astro.props;
+---
+
+<style is:inline>
+    /* Hide alabama */
+    .contact-hero #v-pills-2-tab {
+        display: none;
+    }
+</style>
+
+<section class="contact-hero pb-100 mt-md read-aloud">
+    <div class="container px-5">
+        <div class="row">
+            <div class="col-12 d-flex flex-column align-items-start justify-content-start">
+                <h1 class="mb-5" set:html={contactdata.title.rendered} />
+                
+                <div class="d-flex align-items-start flex-column flex-lg-row">
+                    
+                    <div class="nav flex-column me-5" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+                        <p class="text-center mb-5 lh-sm">Select a location for direct contact information</p>
+                        {contactdata.acf.location_details.map((locationItem, index) => (   
+
+                            <button 
+                                class="nav-link btn-light btn-md shadow fw-medium mb-3" 
+                                id={`v-pills-${index}-tab`} 
+                                data-bs-toggle="pill" 
+                                data-bs-target={`#v-pills-${index}`} 
+                                type="button" 
+                                role="tab" 
+                                aria-controls={`v-pills-${index}`} 
+                                aria-selected="true" 
+                                key={index}
+                            >
+                            {locationItem.location_name}
+                            </button>
+
+                        ))}
+                      
+                    </div>
+                
+                    <div class="tab-content pt-5 pt-lg-0" id="v-pills-tabContent">
+                        {contactdata.acf.location_details.map((locationItem, index) => ( 
+                            <div 
+                                class="tab-pane fade" 
+                                id={`v-pills-${index}`} 
+                                role="tabpanel" 
+                                aria-labelledby={`v-pills-${index}-tab`} 
+                                tabindex="0"
+                            >
+                                <div class="row ps-0 ps-lg-5">
+                                    <div class="col-12 col-md-6 pe-lg-5">
+                                        <div class="morris-primary fw-medium" set:html={locationItem.location_name} />
+                                        <div class="pt-3 lh-sm" set:html={locationItem.location_contents} />
+
+                                        <div class="pt-3 pb-5">
+                                            <div class="slideRight">
+                                                <iframe 
+                                                class="shadow" 
+                                                width="560" 
+                                                height="315" 
+                                                src="https://www.youtube.com/embed/NdFYdRf46ck?si=bHuXR_jq8YnJcXFD;controls=0" 
+                                                title="The Morris Center - A Proven Record of Success" 
+                                                frameborder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex location-details">
+                                            <div class="flex-shrink-0">
+                                                <Image 
+                                                    src={mapPin} 
+                                                    width="24" 
+                                                    height="35" 
+                                                    alt="" 
+                                                />
+                                            </div>
+                                            <div class="flex-grow-1 ms-4 fw-medium" set:html={locationItem.location_address} />
+                                        </div>
+
+                                        <div class="d-flex location-details">
+                                            <div class="flex-shrink-0">
+                                                <Image 
+                                                    src={phoneAlt} 
+                                                    width="24" 
+                                                    height="36" 
+                                                    alt="" 
+                                                /> 
+                                            </div>
+                                            <div class="flex-grow-1 ms-4 fw-medium">
+                                                <a 
+                                                    class="fw-medium" 
+                                                    href={`tel:${locationItem.location_phone}`}
+                                                >
+                                                Call Us {locationItem.location_phone}
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div>
+                                    <div class="col-12 col-md-6 pt-5 pt-lg-0">
+                                        
+                                        <h3>The Morris Center Interest Form</h3>
+                                        <p>Please fill out this form, and a member of our team will contact you shortly.</p>
+                                        {/* <div set:html={locationItem.hipaa_form_code} /> */}
+                                        
+                                        <div data-secure-form="themorriscenter" data-secure-form-transparent-background="true"></div>
+                                        <script is:inline src="https://hushforms.com/f/public/javascript/embed-hush-form.js"></script>
+
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        ))}  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .morris-primary {
+        font-size: 24px;
+    }
+    .message-us:hover {
+        border-bottom: 1px solid #009345;
+        display: block;
+    }
+    .location-details,
+    .location-details a {
+        color: #262261;
+    }
+    button {
+        color: #262261;
+        background-color: #fff;
+    }
+    button.active {
+        border-radius: 0;
+        box-shadow: none!important;
+        background-color: transparent;
+    }
+    .nav-link {
+        padding-top: 0.2em;
+        padding-bottom: 0.2em;
+        font-size: 16px;
+        line-height: 20px;
+    }
+</style>
+
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Select the first button and tab-content
+        const firstButton = document.querySelector(".nav-link");
+        const firstTabContent = document.querySelector(".tab-pane");
+
+        // Add the "active" class to the first button and tab-content
+        if (firstButton && firstTabContent) {
+            firstButton.classList.add("active");
+            firstTabContent.classList.add("show", "active");
+        }
+    });
+</script>

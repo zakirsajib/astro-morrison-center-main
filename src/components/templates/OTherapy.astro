@@ -1,0 +1,384 @@
+---
+const { otherapydata } = Astro.props;
+
+---
+
+<style is:inline>
+    .otherapy-seventh {
+        background-color: #413C86;
+    }
+    .card {
+        background: linear-gradient(to bottom, #ffffff, #eeeded);
+        background: -webkit-linear-gradient(top, #ffffff, #eeeded);
+        background: -moz-linear-gradient(top, #ffffff, #eeeded);
+        background: -ms-linear-gradient(top, #ffffff, #eeeded);
+        background: -o-linear-gradient(top, #ffffff, #eeeded);
+        padding: 20px;
+        border-radius: 30px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+        cursor: text;
+        height: 100%;
+    }
+    .card h3 {
+        padding-bottom: 20px;
+    }
+    .card-text {
+        font-size: 18px;
+    }
+    .card-text p {
+        margin-bottom: 0;
+    }
+    .card-text ul {
+        padding-left: 2rem;
+        padding-top: 2rem;
+    }
+    .card-text ul li {
+        list-style-type: disc;
+        line-height: 20px;
+        padding-bottom: 20px;
+    }
+    .otherapy-seventh .card-body a,
+    .card-text a {
+        border-bottom: 2px solid #009345;
+    }
+    .otherapy-seventh .list-group-item {
+        background-color: transparent;
+    }
+    .otherapy-seventh .card-body ul {
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+        padding-left: 0rem;
+    }
+    
+</style>
+
+<section class="otherapy-hero pb-5 mt-md read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        <div class="col-lg-7 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            <div class="pe-6 text-black" set:html={otherapydata.acf.hero_contents} />
+
+            <div class="text-black" set:html={otherapydata.acf.second_contents} />
+
+        {otherapydata.acf.multiple_column === 'Yes' ? (
+                <div class="row py-1 w-100">
+                    <div class="col-12 col-md-6 col-lg-6 featList">
+                        <ul class="list-group">
+                            {otherapydata.acf.featured_list && otherapydata.acf.featured_list.map((featuredItem, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                 {featuredItem.featured_item} </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 featList">
+		                <ul class="list-group">
+                            {otherapydata.acf.featured_list_2 && otherapydata.acf.featured_list_2.map((featuredItem2, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                 {featuredItem2.featured_item} </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                ) : (
+                <div class="row py-1">
+                    <div class="col-12 featList">
+                        <ul class="list-group">
+                            {otherapydata.acf.featured_list && otherapydata.acf.featured_list.map((featuredItem, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                 {featuredItem.featured_item} </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+        )}    
+
+
+        </div>
+        <div class="col-lg-5 col-sm-12 d-flex flex-column align-items-center justify-content-start pt-5 pt-lg-0">
+          {otherapydata.acf.hero_image && (
+            <img 
+                class="rounded-5" 
+                src={otherapydata.acf.hero_image.url} 
+                alt={otherapydata.acf.hero_image.alt}
+                width={otherapydata.acf.hero_image.width}
+                height={otherapydata.acf.hero_image.height}
+            />
+          )}
+          {otherapydata.acf.hero_video && (
+            <div 
+                class="slideRight" 
+                set:html={otherapydata.acf.hero_video} 
+            /> 
+        )}
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="otherapy-third pb-5 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-center justify-content-center">
+          {otherapydata.acf.third_section_image && (
+            <img 
+                class="rounded-5" 
+                src={otherapydata.acf.third_section_image.url} 
+                alt={otherapydata.acf.third_section_image.alt}
+                width={otherapydata.acf.third_section_image.width}
+                height={otherapydata.acf.third_section_image.height}
+            />
+          )}
+        </div>
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center pt-5 pt-lg-0">
+            <div class="ps-0 ps-lg-5 text-black" set:html={otherapydata.acf.third_contents} />
+
+            {otherapydata.acf.multiple_column_2 === 'Yes' ? (
+                <div class="row py-3 ps-0 ps-lg-5">
+                    <div class="col-12 col-md-6 col-lg-6 featList">
+                        <ul class="list-group">
+                            {otherapydata.acf.featured_list_third && otherapydata.acf.featured_list_third.map((featuredItem, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                <div style="display: flex; align-items: center;">
+                                <span style="flex:1;margin-left:10px;">{featuredItem.featured_item}</span></div></li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 featList">
+		                <ul class="list-group">
+                            {otherapydata.acf.featured_list_3 && otherapydata.acf.featured_list_3.map((featuredItem3, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                <div style="display: flex; align-items: center;">
+                                <span style="flex:1;margin-left: 10px;">{featuredItem3.featured_item}</span></div></li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                ) : (
+                <div class="row ps-0 ps-lg-5 py-3">
+                    <div class="col-12 featList">
+                        <ul class="list-group">
+                            {otherapydata.acf.featured_list_third && otherapydata.acf.featured_list_third.map((featuredItem4, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                 {featuredItem4.featured_item} </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+        )} 
+
+        {otherapydata.acf.third_contents_extra && (
+            <div class="ps-0 ps-lg-5" set:html={otherapydata.acf.third_contents_extra} />
+        )}
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="otherapy-fourth pb-5 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            <div class="pe-5 text-black" set:html={otherapydata.acf.fourth_contents} />
+
+            {otherapydata.acf.multiple_column_3 === 'Yes' ? (
+                <div class="row py-3 pe-5">
+                    <div class="col-12 col-md-6 col-lg-6 featList">
+                        <ul class="list-group">
+                            {otherapydata.acf.featured_list_fourth && otherapydata.acf.featured_list_fourth.map((featuredItem, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                <div style="display: flex; align-items: center;">
+                                <span style="flex:1;margin-left:10px;">{featuredItem.featured_item}</span></div></li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 featList">
+		                <ul class="list-group">
+                            {otherapydata.acf.featured_list_4 && otherapydata.acf.featured_list_4.map((featuredItem4, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                <div style="display: flex; align-items: center;">
+                                <span style="flex:1;margin-left: 10px;">{featuredItem4.featured_item}</span></div></li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                ) : (
+                <div class="row pe-5 py-3">
+                    <div class="col-12 featList">
+                        <ul class="list-group">
+                            {otherapydata.acf.featured_list_fourth && otherapydata.acf.featured_list_fourth.map((featuredItem5, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                 {featuredItem5.featured_item} </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+        )} 
+        </div>
+
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-center justify-content-start">
+            {otherapydata.acf.fourth_section_image && (
+              <img 
+                  class="rounded-5" 
+                  src={otherapydata.acf.fourth_section_image.url} 
+                  alt={otherapydata.acf.fourth_section_image.alt}
+                  width={otherapydata.acf.fourth_section_image.width}
+                  height={otherapydata.acf.fourth_section_image.height}
+              />
+            )}
+          </div>
+      </div>
+    </div>
+</section>
+
+<section class="otherapy-fifth pb-5 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        
+        <div class="col-lg-4 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+          {otherapydata.acf.fifth_section_image && (
+            <img 
+                class="rounded-5" 
+                src={otherapydata.acf.fifth_section_image.url} 
+                alt={otherapydata.acf.fifth_section_image.alt}
+                width={otherapydata.acf.fifth_section_image.width}
+                height={otherapydata.acf.fifth_section_image.height}
+            />
+          )}
+        </div>
+        <div class="col-lg-8 col-sm-12 d-flex flex-column align-items-start justify-content-center pt-5 pt-lg-0">
+            <div class="ps-0 ps-lg-5 text-black" set:html={otherapydata.acf.fifth_contents} />
+
+            {otherapydata.acf.multiple_column_4 === 'Yes' ? (
+                <div class="row py-3 ps-0 ps-lg-5">
+                    <div class="col-12 col-md-6 col-lg-6 featList">
+                        <ul class="list-group">
+                            {otherapydata.acf.featured_list_fifth && otherapydata.acf.featured_list_fifth.map((featuredItem, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                <div style="display: flex; align-items: center;">
+                                <span style="flex:1;margin-left:10px;">{featuredItem.featured_item}</span></div></li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 featList">
+		                <ul class="list-group">
+                            {otherapydata.acf.featured_list_5 && otherapydata.acf.featured_list_5.map((featuredItem5, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                <div style="display: flex; align-items: center;">
+                                <span style="flex:1;margin-left: 10px;">{featuredItem5.featured_item}</span></div></li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                ) : (
+                <div class="row ps-0 ps-lg-5 py-3">
+                    <div class="col-12 featList">
+                        <ul class="list-group">
+                            {otherapydata.acf.featured_list_fifth && otherapydata.acf.featured_list_fifth.map((featuredItem5, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                 {featuredItem5.featured_item} </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+        )} 
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="otherapy-sixth pb-5 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+        <div class="row">
+            <div class="col-lg-8 col-sm-12 d-flex flex-column align-items-start justify-content-center pt-5 pt-lg-0">
+                {otherapydata.acf.sixth_contents && (
+                    <div class="col-12 mb-0 mb-md-3 pe-lg-5 text-black" set:html={otherapydata.acf.sixth_contents} />
+                )}
+            </div>
+            <div class="col-lg-4 col-sm-12 d-flex flex-column align-items-center justify-content-start">
+                {otherapydata.acf.sixth_section_image && (
+                <img 
+                    class="rounded-5" 
+                    src={otherapydata.acf.sixth_section_image.url} 
+                    alt={otherapydata.acf.sixth_section_image.alt}
+                    width={otherapydata.acf.sixth_section_image.width}
+                    height={otherapydata.acf.sixth_section_image.height}
+                />
+                )}
+            </div>    
+
+
+        </div>
+    </div>
+</section>
+
+<section class="otherapy-seventh pt-50 pb-50 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+        <div class="row">
+            
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+                {otherapydata.acf.seventh_section_titleheading && (
+                    <h2 class="text-white" set:html={otherapydata.acf.seventh_section_titleheading} />
+                )}
+                {otherapydata.acf.seventh_contents_col_1 && (
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-text text-black" set:html={otherapydata.acf.seventh_contents_col_1} />
+
+                            <ul class="list-group">
+                            {otherapydata.acf.featured_list_seventh_1 && otherapydata.acf.featured_list_seventh_1.map((featuredItem6, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#dc3545" class="bi bi-heart-fill" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+</svg> {featuredItem6.featured_item} </li>
+                            ))}
+                        </ul>
+                        </div>
+                    </div>
+                )}
+            </div>
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+                {otherapydata.acf.seventh_contents_col_2 && (
+                    <h2 class="text-white" set:html={otherapydata.acf.seventh_contents_col_2} />
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="list-group">
+                            {otherapydata.acf.featured_list_seventh_2 && otherapydata.acf.featured_list_seventh_2.map((featuredItem7, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                <div style="display: flex; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#009345" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+              </svg><span style="flex:1;margin-left: 10px;">{featuredItem7.featured_item}</span></div></li>
+                            ))}
+                        </ul>
+                        {otherapydata.acf.seventh_contents_col_3 && (
+                            <div class="text-black" set:html={otherapydata.acf.seventh_contents_col_3} />
+                        )}
+                        </div>
+                    </div>
+                )}
+            </div>
+        
+        </div>
+    </div>
+</section>

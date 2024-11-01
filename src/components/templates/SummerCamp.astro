@@ -1,0 +1,139 @@
+---
+const { scdata } = Astro.props;
+
+---
+
+<style is:inline>
+    .summer-camp-hero {
+        background-size: cover;
+        background-position: top;
+        background-repeat: no-repeat;
+    }
+    .summer-camp-hero .card-body {
+        padding: 0 0 0 10px;
+    }
+    .card {
+        background: linear-gradient(to bottom, #ffffff, #eeeded);
+        background: -webkit-linear-gradient(top, #ffffff, #eeeded);
+        background: -moz-linear-gradient(top, #ffffff, #eeeded);
+        background: -ms-linear-gradient(top, #ffffff, #eeeded);
+        background: -o-linear-gradient(top, #ffffff, #eeeded);
+        padding: 20px;
+        border-radius: 30px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+        cursor: text;
+        height: 100%;
+    }
+    .card h3 {
+        padding-bottom: 20px;
+    }
+    .card-text {
+        color: #000;
+        font-size: 18px;
+    }
+    .card-text p {
+        margin-bottom: 0;
+    }
+    .card-text ul {
+        padding-left: 2rem;
+    }
+    .card-text ul li {
+        list-style-type: disc;
+        line-height: 20px;
+        padding-bottom: 20px;
+    }
+    
+    
+</style>
+
+
+
+<section class="read-aloud summer-camp-hero pt-5 pb-5 mt-sm d-flex flex-column align-items-start justify-content-center" style={{backgroundImage:`url('${scdata.acf.hero_image}')`}}>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 ps-2 pe-2 ps-lg-5 pe-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-text text-black" set:html={scdata.acf.hero_contents} />
+                    {scdata.acf.cta_button && (
+                        <a class="btn btn-primary btn-lg mt-4 mb-0 px-5" type="button" href={scdata.acf.cta_button_url} set:html={scdata.acf.cta_button} />
+                    )}
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="summer-camp-two py-5 mt-sm read-aloud">
+    <div class="container ps-4 pe-4 ps-lg-5 pe-lg-5">
+        <div class="row">
+            {scdata.acf.second_section_contents && (
+            <div class="col-10 mx-auto" set:html={scdata.acf.second_section_contents} />
+            )}
+        </div>
+    </div>
+</section>
+
+<section class="summer-camp-three pb-5 mt-sm read-aloud">
+    <div class="container ps-4 pe-4 ps-lg-5 pe-lg-5">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="pe-0 col-12" set:html={scdata.acf.section_four_titleheading} />
+            </div>
+        </div>
+        <div class="row">
+            {scdata.acf.camps && scdata.acf.camps.map((campsItem, index) => (
+                <div class="col-12 col-lg-4 mb-3">
+                    <div class="card pb-4" key={index}>
+                        <div class="card-body">  
+                            <div class="card-text" set:html={campsItem.camps_details} />
+                        </div>
+                    </div>
+                </div> 
+            ))}
+        </div>
+        <div class="row">
+            {scdata.acf.section_third_contents && (
+                <div class="col-12 mt-5 mb-0 mb-md-3">
+                    <div 
+                    set:html={scdata.acf.section_third_contents} />
+                </div> 
+            )}
+        </div>
+    </div>
+</section>
+
+<section class="summer-camp-four pb-5 mt-sm read-aloud">
+    <div class="container ps-4 pe-4 ps-lg-5 pe-lg-5">
+      <div class="row">
+        <div class="col-lg-8 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            <div class="pe-6 text-black" set:html={scdata.acf.fourth_section_contents} />
+        </div>
+        <div class="col-lg-4 col-sm-12 d-flex flex-column align-items-center justify-content-start">
+          {scdata.acf.fourth_section_image && (
+            <img 
+                class="rounded-5" 
+                src={scdata.acf.fourth_section_image.url} 
+                alt={scdata.acf.fourth_section_image.alt}
+                width={scdata.acf.fourth_section_image.width}
+                height={scdata.acf.fourth_section_image.height}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="summer-camp-five pt-3 pb-100 mt-sm read-aloud">
+    <div class="container ps-4 pe-4 ps-lg-5 pe-lg-5">
+        <div class="row">
+            {scdata.acf.fifth_section_contents && (
+            <div class="col-12" set:html={scdata.acf.fifth_section_contents} />
+            )}
+        </div>
+    </div>
+</section>
+

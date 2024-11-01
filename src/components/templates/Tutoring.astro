@@ -1,0 +1,325 @@
+---
+const { tpdata } = Astro.props;
+
+---
+
+<style is:inline>
+  video {
+    border-radius: 20px;
+  }
+  .btn-lg {
+    font-size: 1rem;
+  }
+  h1 {
+    margin-bottom: 25px;
+  }
+  h2 {
+    font-size: 20px;
+    line-height: 30px;
+    margin-top: 50px;
+  }
+  .tutoring-second-section h2,
+  .tutoring-third-section h2,
+  .tutoring-fourth-section h2,
+  .tutoring-fifth-section h2 {
+    margin-top: 25px;
+  }
+  .card {
+        background: linear-gradient(to bottom, #ffffff, #eeeded);
+        background: -webkit-linear-gradient(top, #ffffff, #eeeded);
+        background: -moz-linear-gradient(top, #ffffff, #eeeded);
+        background: -ms-linear-gradient(top, #ffffff, #eeeded);
+        background: -o-linear-gradient(top, #ffffff, #eeeded);
+        padding: 20px;
+        border-radius: 30px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+        cursor: text;
+    }
+    .tutoring-third-section .slideTitle { 
+        padding-bottom: 5px;
+    }
+    .tutoring-third-section .slideDescr {
+        border-top: 2px solid #009345;
+        padding-top: 20px;
+    }
+    .tutoring-fourth-section ol li {
+        padding-bottom: 20px;
+    }
+    .tutoring-fourth-section ol li::marker {
+        font-weight: 700;
+        font-size: 20px;
+        color: #262261;
+    }
+</style>
+
+
+<section class="tutoring-hero pb-0 mt-md read-aloud">
+    <div class="container ps-4 pe-4">
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+            {tpdata.acf.hero_section && (
+                <div class="pe-5 text-black" set:html={tpdata.acf.hero_section} />
+            )}
+
+            {tpdata.acf.copy && (
+                <div class="text-black" set:html={tpdata.acf.copy} />
+            )}
+
+            {tpdata.acf.multiple_column === 'Yes' ? (
+            <div class="row py-1 w-100">
+                <div class="col-12 col-md-6 col-lg-6 featList">
+                    <ul class="list-group">
+                        {tpdata.acf.featured_list_1 && tpdata.acf.featured_list_1.map((featuredItem, index) => (
+                            <li key={index}
+                            class="list-group-item">
+                            {featuredItem.featured_item} </li>
+                        ))}
+                    </ul>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6 featList">
+                    <ul class="list-group">
+                        {tpdata.acf.featured_list_extra && tpdata.acf.featured_list_extra.map((featuredItem2, index) => (
+                            <li key={index}
+                            class="list-group-item">
+                            {featuredItem2.featured_item} </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+
+            ) : (
+            <div class="row py-1">
+                <div class="col-12 featList">
+                    <ul class="list-group">
+                        {tpdata.acf.featured_list && tpdata.acf.featured_list.map((featuredItem, index) => (
+                            <li key={index}
+                            class="list-group-item">
+                            {featuredItem.featured_item} </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+            )}  
+            
+            {tpdata.acf.copy2 && (
+                <div class="pt-4 text-black" set:html={tpdata.acf.copy2} />
+            )}
+
+
+        </div>
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-content-around justify-content-start">
+          {tpdata.acf.hero_video && (
+            
+            <div 
+              class="slideRight" 
+              set:html={tpdata.acf.hero_video} 
+            />
+
+          )}
+
+
+
+
+<!-- <div class="slideRight">
+	<div id="player" data-plyr-provider="youtube" data-plyr-embed-id="T0srSJ6qa2U"></div>
+</div> -->
+
+            {/* <video autoplay loop muted playsinline>
+              <source src={tpdata.acf.hero_video} type="video/mp4" />
+            </video> 
+            */}
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="tutoring-second-section pb-0 mt-sm read-aloud">
+    <div class="container ps-4 pe-4">
+      <div class="row">
+        <div class="col-lg-7 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+            {tpdata.acf.second_section_copy && (
+                <div class="text-black" set:html={tpdata.acf.second_section_copy} />
+            )}
+
+            {tpdata.acf.key_features && (
+                <div class="card col-lg-9 mt-3">
+                    <div class="card-body">
+                        <div class="card-text text-black" set:html={tpdata.acf.key_features} />
+                    </div>
+                </div>
+            )}   
+
+            {tpdata.acf.extra_contents && (
+                <div class="text-black mt-3" set:html={tpdata.acf.extra_contents} />
+            )}
+
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="tutoring-third-section pb-0 mt-sm read-aloud">
+    <div class="container ps-4 pe-4">
+      <div class="row">
+        <div class="col-12 d-flex flex-column align-items-start justify-content-start">
+            {tpdata.acf.third_section_copy && (
+                <div class="text-black" set:html={tpdata.acf.third_section_copy} />
+            )}
+        </div>
+
+        <div class="col-12">
+                {tpdata.acf.programs && tpdata.acf.programs.map((programItem, index) => (
+                    <div class="card" key={index}>
+                        <div class="slideTitle" set:html={programItem.program_title} />
+                        <div class="slideDescr" set:html={programItem.program_descriptions} />
+                    </div>
+                ))}
+        </div>
+        
+        <div class="col-12 d-flex flex-column align-items-start justify-content-start">
+                {tpdata.acf.extra_contents_third && (
+                    <div class="text-black mt-3" set:html={tpdata.acf.extra_contents_third} />
+                )}
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="tutoring-fourth-section pb-0 mt-sm read-aloud">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            {tpdata.acf.fourth_section_contents && (
+                <div class="col-12 mb-0 mb-md-3">
+                    <div set:html={tpdata.acf.fourth_section_contents} />
+                </div> 
+            )}
+        </div>
+    </div>
+</section>
+
+
+<section class="tutoring-fifth-section pb-50 mt-sm read-aloud">
+    <div class="container ps-4 pe-4">
+      <div class="row">
+        <div class="col-12 d-flex flex-column align-items-start justify-content-start">
+            {tpdata.acf.fifth_section_copy && (
+                <div class="pe-5 text-black" set:html={tpdata.acf.fifth_section_copy} />
+            )}
+
+            {tpdata.acf.multiple_column_copy === 'Yes' ? (
+            <div class="row py-1 w-100">
+                <div class="col-12 col-md-6 col-lg-6 featList">
+                    <ul class="list-group">
+                        {tpdata.acf.featured_list_2 && tpdata.acf.featured_list_2.map((featuredItem, index) => (
+                            <li key={index}
+                            class="list-group-item">
+                            {featuredItem.featured_item} </li>
+                        ))}
+                    </ul>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6 featList">
+                    <ul class="list-group">
+                        {tpdata.acf.featured_list_extra_copy && tpdata.acf.featured_list_extra_copy.map((featuredItem2, index) => (
+                            <li key={index}
+                            class="list-group-item">
+                            {featuredItem2.featured_item} </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+
+            ) : (
+            <div class="row py-1">
+                <div class="col-12 featList">
+                    <ul class="list-group">
+                        {tpdata.acf.featured_list_2 && tpdata.acf.featured_list_2.map((featuredItem, index) => (
+                            <li key={index}
+                            class="list-group-item">
+                            {featuredItem.featured_item} </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+            )}  
+            
+            {tpdata.acf.fifth_section_extra_copy && (
+                <div class="pt-4 text-black" set:html={tpdata.acf.fifth_section_extra_copy} />
+            )}
+
+
+        </div>
+        
+      </div>
+    </div>
+</section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Videos
+      var videos = document.querySelectorAll("video");
+  
+      var videoOptions = {
+        root: null, // use the viewport as the root
+        rootMargin: "0px",
+        threshold: 0.5 // trigger when 50% of the video is visible
+      };
+  
+      var videoObserver = new IntersectionObserver(handleVideoIntersect, videoOptions);
+  
+      videos.forEach(function (video) {
+        videoObserver.observe(video);
+      });
+  
+      // Iframes
+      var iframes = document.querySelectorAll('.swiper-slide iframe');
+  
+      var iframeOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5 // Adjust this threshold as needed
+      };
+  
+      var iframeObserver = new IntersectionObserver(handleIframeIntersect, iframeOptions);
+  
+      iframes.forEach(function (iframe) {
+        iframeObserver.observe(iframe);
+      });
+  
+      function handleVideoIntersect(entries, observer) {
+        entries.forEach(function (entry) {
+          var video = entry.target;
+  
+          if (entry.isIntersecting) {
+            video.play(); // start playing when in viewport
+          } else {
+            video.pause(); // pause when not in viewport
+          }
+        });
+      }
+  
+      function handleIframeIntersect(entries, observer) {
+        entries.forEach(function (entry) {
+          var iframe = entry.target;
+  
+          if (entry.isIntersecting) {
+            var iframeSrc = iframe.getAttribute('data-src');
+            iframe.src = iframeSrc;
+            observer.unobserve(iframe);
+          }
+        });
+      }
+    });
+  </script>
+
+<!-- <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+<script is:inline src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+
+<script>
+  const player = new Plyr('#player', {
+    resetOnEnd: true,
+  });
+  window.player = player;
+
+</script> -->

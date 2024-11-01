@@ -1,0 +1,483 @@
+---
+import { getReadingTime } from "../../lib/readingtime";
+import About from "./About.astro";
+import Faqs from "./Faqs.astro";
+import Careers from "./Careers.astro";
+import Research from "./Research.astro";
+import Testimonials from "./Testimonials.astro";
+import Ocla from "./Ocla.astro";
+import Contact from "./Contact.astro";
+import Locations from "./Locations.astro";
+import WhoServe from "./Whoweserve.astro";
+import WhyMorris from "./WhyMorris.astro";
+import TransApp from "./TransApp.astro";
+import SummerCamp from "./SummerCamp.astro";
+import SummerCampVedraBeach from "./SummerCampVedraBeach.astro";
+import SummerCampOcala from "./SummerCampOcala.astro";
+import OTherapy from "./OTherapy.astro";
+import OTherapist from "./OTherapist.astro";
+import TPrograms from "./Tutoring.astro";
+import Testing from "./Testing.astro";
+import Psychology from "./Psychology.astro";
+import Slp from "./Slp.astro";
+import Private from "./Private.astro";
+
+const { node } = Astro.props;
+
+let privateData = {};
+let slpData = {};
+let psychologyData = {};
+let testingData = {};
+let tpData = {};
+let otherapyData = {};
+let otherapistData = {};
+let scData = {};
+let scVedraBeachData = {};
+let scOcalaData = {};
+let transData = {};
+let whyMorrisData = {};
+let aboutData = {};
+let careersData = {};
+let faqsData = {};
+let researchData = {};
+let testimonialsData = {};
+let locationsData = {};
+let contactData = {};
+let oclaData = {};
+let jacksonvilleData = {};
+let trinidadData = {};
+let freData = {};
+let serveData = {};
+
+
+//async function fetchDataBasedOnUri() {
+//  try {
+    if (node.uri === '/services/tutoring-programs/') {
+        const API_URL_TP = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/87?_fields=title,acf`;
+        const resTP = await fetch(API_URL_TP);
+        tpData = await resTP.json();
+
+    } else if (node.uri === '/services/psychology/') {
+        const API_URL_Psychology = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/518?_fields=title,acf`;
+        const resPsychology = await fetch(API_URL_Psychology);
+        psychologyData = await resPsychology.json();
+    } else if (node.uri === '/services/the-morris-center-academy/') {
+        const API_URL_Private = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/519?_fields=title,acf`;
+        const resPrivate = await fetch(API_URL_Private);
+        privateData = await resPrivate.json();
+    } else if (node.uri === '/services/speech-language-pathology/') {
+        const API_URL_Slp = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/83?_fields=title,acf`;
+        const resSlp = await fetch(API_URL_Slp);
+        slpData = await resSlp.json();
+    } else if (node.uri === '/services/testing/') {
+        const API_URL_Test = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/88?_fields=title,acf`;
+        const resTest = await fetch(API_URL_Test);
+        testingData = await resTest.json();
+    } else if (node.uri === '/services/occupational-therapy/') {
+        const API_URL_OTherapy = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/84?_fields=title,acf`;
+        const resOTherapy = await fetch(API_URL_OTherapy);
+        otherapyData = await resOTherapy.json();
+    } else if (node.uri === '/occupational-therapist/') {
+        const API_URL_OTherapist = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/520?_fields=title,acf`;
+        const resOTherapist = await fetch(API_URL_OTherapist);
+        otherapistData = await resOTherapist.json();
+    } else if (node.uri === '/services/summer-camp/') {
+        const API_URL_SC = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/86?_fields=title,acf`;
+        const resSC = await fetch(API_URL_SC);
+        scData = await resSC.json();
+    } else if (node.uri === '/services/summer-camp/ponte-vedra/') {
+        const API_URL_SCVB = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/838?_fields=title,acf`;
+        const resSCVB = await fetch(API_URL_SCVB);
+        scVedraBeachData = await resSCVB.json();
+    } else if (node.uri === '/services/summer-camp/ocala/') {
+        const API_URL_SCocala = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/841?_fields=title,acf`;
+        const resSCOcala = await fetch(API_URL_SCocala);
+        scOcalaData = await resSCOcala.json();
+    } else if (node.uri === '/transdisciplinary-approach/') {
+        const API_URL_TRANS = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/82?_fields=title,acf`;
+        const resTrans = await fetch(API_URL_TRANS);
+        transData = await resTrans.json();
+    } else if (node.uri === '/why-the-morris-center/') {
+        const API_URL_WHYMORRIS = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/80?_fields=title,acf`;
+        const resWhyMorris = await fetch(API_URL_WHYMORRIS);
+        whyMorrisData = await resWhyMorris.json();
+    } else if (node.uri === '/about/') {
+        //const API_URL_ABOUT = "${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/2?_fields=title,acf";
+        const API_URL_ABOUT = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/2?_fields=title,acf`;
+
+        const resAbout = await fetch(API_URL_ABOUT);
+        aboutData = await resAbout.json();
+    } else if(node.uri === '/careers/') {
+        const API_URL_CAREERS = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/81?_fields=acf`;
+        const resCareers = await fetch(API_URL_CAREERS);
+        careersData = await resCareers.json();
+    } else if (node.uri === '/faqs/') {
+        const API_URL_FAQS = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/24?_fields=acf`;
+        const resFaqs = await fetch(API_URL_FAQS);
+        faqsData = await resFaqs.json();
+    } else if (node.uri === '/research/') {
+        const API_URL_RESEARCH = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/10?_fields=title,acf`;
+        const resResearch = await fetch(API_URL_RESEARCH);
+        researchData = await resResearch.json();
+    } else if (node.uri === '/testimonials/') {
+        const API_URL_TESTIMONIALS = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/20?_fields=acf`;
+        const resTestimonials = await fetch(API_URL_TESTIMONIALS);
+        testimonialsData = await resTestimonials.json();
+
+        const API_URL_ABOUT = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/2?_fields=title,acf`;
+        const resAbout = await fetch(API_URL_ABOUT);
+        aboutData = await resAbout.json();
+
+        const API_URL_FRE = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/frequently_asked_que`;
+        const resFre = await fetch(API_URL_FRE);
+        freData = await resFre.json();
+
+    } else if (node.uri === '/locations/') {
+        const API_URL_LOCATIONS = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/11?_fields=title,acf`;
+        const resLocations = await fetch(API_URL_LOCATIONS);
+        locationsData = await resLocations.json();
+    } else if (node.uri === '/contact-us/') {
+        const API_URL_CONTACT = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/12?_fields=title,acf`;
+        const resContact = await fetch(API_URL_CONTACT);
+        contactData = await resContact.json();
+    } else if (node.uri === '/contact-us/ocala-florida/') {
+        const API_URL_OCLA = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/50?_fields=title,acf`;
+        const resOcla = await fetch(API_URL_OCLA);
+        oclaData = await resOcla.json();
+    } else if (node.uri === '/contact-us/jacksonville-florida/') {
+        const API_URL_JACKSON = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/92?_fields=title,acf`;
+        const resJACKSON = await fetch(API_URL_JACKSON);
+        jacksonvilleData = await resJACKSON.json();
+    } else if (node.uri === '/contact-us/trinidad-and-tobago/') {
+        const API_URL_TRINIDAD = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/97?_fields=title,acf`;
+        const resTRINIDAD = await fetch(API_URL_TRINIDAD);
+        trinidadData = await resTRINIDAD.json();
+    // } else if (node.uri === '/testimonials/') {
+    //     const API_URL_FRE = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/frequently_asked_que`;
+    //     const resFre = await fetch(API_URL_FRE);
+    //     freData = await resFre.json();
+    } else if (node.uri === '/neurodiversity/') {
+        // learning-disabilities-differences
+        const API_URL_SERVE = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/8?_fields=title,acf`;
+        const resServe = await fetch(API_URL_SERVE);
+        serveData = await resServe.json();
+    }
+
+
+  //} catch (error) {
+  //    console.error('Error fetching data:', error);
+  //}
+
+//}
+//console.log(node.uri);
+
+// Call the async function
+//fetchDataBasedOnUri().catch(error => console.error('Error in fetchDataBasedOnUri:', error));
+
+export {aboutData, careersData, researchData, testimonialsData, freData, oclaData, jacksonvilleData, trinidadData, contactData, locationsData, serveData, whyMorrisData, transData, scData, otherapyData, tpData, testingData, otherapistData, faqsData, scVedraBeachData, scOcalaData, psychologyData, slpData, privateData};
+---
+
+  <div>
+    {node.__typename === 'Page' ? (
+        <div>
+            
+            {node.uri === '/about/' && (
+                <About aboutdata={aboutData}></About>
+            )}
+            {node.uri === '/faqs/' && (
+                <Faqs faqsdata={faqsData}></Faqs>
+            )}
+            {node.uri === '/careers/' && (
+                <Careers careerdata={careersData}></Careers>
+            )}
+            {node.uri === '/research/' && (
+                <Research researchdata={researchData}></Research>
+            )}
+            {node.uri === '/contact-us/ocala-florida/' && (
+                <Ocla ocladata={oclaData}></Ocla>
+            )}
+            {node.uri === '/contact-us/jacksonville-florida/' && (
+                <Ocla ocladata={jacksonvilleData}></Ocla>
+            )}
+            {node.uri === '/contact-us/trinidad-and-tobago/' && (
+                <Ocla ocladata={trinidadData}></Ocla>
+            )}
+            {node.uri === '/contact-us/' && (
+                <Contact contactdata={contactData}></Contact>
+            )}
+            {node.uri === '/neurodiversity/' && (
+                <WhoServe servedata={serveData}></WhoServe>
+            )}
+            {node.uri === '/locations/' && (
+                <Locations locationsdata={locationsData}></Locations>
+            )}
+            {node.uri === '/why-the-morris-center/' && (
+                <WhyMorris whymorrisdata={whyMorrisData}></WhyMorris>
+            )}
+            {node.uri === '/transdisciplinary-approach/' && (
+                <TransApp transdata={transData}></TransApp>
+            )}
+            {node.uri === '/services/summer-camp/' && (
+                <SummerCamp scdata={scData}></SummerCamp>
+            )}
+            {node.uri === '/services/summer-camp/ponte-vedra/' && (
+                <SummerCampVedraBeach scVBdata={scVedraBeachData}></SummerCampVedraBeach>
+            )}
+            {node.uri === '/services/summer-camp/ocala/' && (
+                <SummerCampOcala scOCdata={scOcalaData}></SummerCampOcala>
+            )}
+            {node.uri === '/services/tutoring-programs/' && (
+                <TPrograms tpdata={tpData}></TPrograms>
+            )}
+            {node.uri === '/services/occupational-therapy/' && (
+                <OTherapy otherapydata={otherapyData}></OTherapy>
+            )}
+            {node.uri === '/services/testing/' && (
+                <Testing testingdata={testingData}></Testing>
+            )}
+            {node.uri === '/services/psychology/' && (
+                <Psychology psychologydata={psychologyData}></Psychology>
+            )}
+            {node.uri === '/services/the-morris-center-academy/' && (
+                <Private privatedata={privateData}></Private>
+            )}
+            {node.uri === '/services/speech-language-pathology/' && (
+                <Slp slpdata={slpData}></Slp>
+            )}
+            {node.uri === '/occupational-therapist/' && (
+                <OTherapist otherapistdata={otherapistData}></OTherapist>
+            )}
+            {node.uri === '/testimonials/' && (
+                <Testimonials 
+                  testidata={testimonialsData} 
+                  faqdata={aboutData}
+                  fredata={freData}
+                >
+                </Testimonials>
+            )}
+            {/* Else case */}
+            {node.uri !== '/about/' && 
+            node.uri !== '/faqs/' && 
+            node.uri !== '/careers/' && 
+            node.uri !== '/research/' && 
+            node.uri !== '/contact-us/ocala-florida/' &&
+            node.uri !== '/contact-us/jacksonville-florida/' &&
+            node.uri !== '/contact-us/trinidad-and-tobago/' &&
+            node.uri !== '/contact-us/' &&
+            node.uri !== '/locations/' &&
+            node.uri !== '/neurodiversity/' &&
+            node.uri !== '/why-the-morris-center/' &&
+            node.uri !== '/transdisciplinary-approach/' &&
+            node.uri !== '/services/summer-camp/' &&
+            node.uri !== '/services/summer-camp/ponte-vedra/' &&
+            node.uri !== '/services/summer-camp/ocala/' &&
+            node.uri !== '/services/tutoring-programs/' &&
+            node.uri !== '/services/occupational-therapy/' &&
+            node.uri !== '/services/testing/' &&
+            node.uri !== '/services/psychology/' &&
+            node.uri !== '/services/the-morris-center-academy/' &&
+            node.uri !== '/services/speech-language-pathology/' &&
+            node.uri !== '/occupational-therapist/' &&
+            node.uri !== '/testimonials/' && (
+            <section class="home-hero pb-100 mt-md">
+              <div class="container ps-4 pe-4">
+                <div class="row">
+                  <div class="col-sm-12 pe-5 ps-5 pb-5">
+                    <div class="alert alert-primary" role="alert">404 Error</div>
+                  </div> 
+                </div>
+              </div>
+            </section>
+            )}
+
+        </div>
+    ) : null}
+    {node.__typename === 'Post' ? (
+        <div>
+          { node.categories ?
+            node.categories.nodes.map(category => (<a class='btn btn-outline-danger' href={category.uri}>{category.name}</a>)) :
+            null
+          }
+            <h1>{node.title}</h1>
+            <div class="metaWrapper">
+              <p class='post-details'>
+                Posted on <time datetime={node.date}>{new Date(node.date).toLocaleDateString()}</time>
+                </p>
+                <p class='post-details'>{getReadingTime(node.content)} min. to read</p>
+            </div>
+            <img class='featured-image'
+                src={node.featuredImage?.node?.mediaItemUrl}
+                srcset={node.featuredImage?.node?.srcSet}
+                alt={node.featuredImage?.node?.altText}
+                loading='lazy'
+                width={node.featuredImage?.node?.mediaDetails?.width}
+                height={node.featuredImage?.node?.mediaDetails?.height}
+            />
+            <article set:html={node.content} />
+        </div>
+    ) : null}
+  </div>
+
+<style is:global>
+    .wp-block-image img {
+      width: 100%;
+      height: auto;
+    }
+
+    a span {
+      color: #262261;
+    }
+    .btn.btn-primary span {
+      color: #FFF;
+    }
+
+    .about-third h3 {
+      border-bottom: 2px solid #009345;
+      display: inline-block;
+      margin-bottom: 20px;
+      padding-bottom: 5px;
+    }
+
+    /* h2 {
+        font-size: 28px;
+        line-height: 35px;
+    } */
+    .accordion-item {
+        background: #fff;
+        margin-bottom: 10px;
+        border-radius: 20px;
+    }
+    .accordion-header {
+        padding-bottom: 0;
+        font-weight: 500;
+    }
+    .accordion-button {
+        background-color: transparent;
+        /* background: linear-gradient(to bottom,#ffffff,#eeeded);
+        background: -webkit-linear-gradient(top,#ffffff,#eeeded); */
+        border-radius: 20px;
+        margin-bottom: 10px;
+        border: 1px solid #fff;
+        background: #fff;
+        color: #262261;
+        font-size: 20px;
+    }
+
+    .accordion-item:first-of-type,
+    .accordion-item:last-of-type,
+    .accordion-item:last-of-type .accordion-button.collapsed,
+    .accordion-item:first-of-type .accordion-button {
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+    .accordion-item:last-of-type {
+      border-bottom-right-radius: 20px;
+      border-bottom-left-radius: 20px;
+    }
+    .accordion-button:not(.collapsed) {
+      background-color: #fff;
+      box-shadow: none;
+    }
+
+    .list-group-item {
+      padding-left: 0;
+      line-height: 25px;
+    }
+    .list-group-item a,
+    .faqSidebar .widget p,
+    .faqSidebar .widget ul li a {
+      font-size: 16px;
+    }
+    .faqSidebar .widget {
+        padding-bottom: 1em;
+    }
+    .faqSidebar .widget h3 {
+      padding-bottom: 20px;
+    }
+    .faqSidebar .widget .menu li > ul {
+      /* margin-left: 10px; */
+      padding-top: 15px;
+    }
+    .faqSidebar .widget .menu li {
+      padding-bottom: 15px;
+    }
+
+    .faqSidebar .widget p a {
+      border-bottom: 1px solid;
+    }
+
+    .faqSidebar .widget p a:hover,
+    .faqSidebar .widget ul li a:hover {
+        border-bottom: 2px solid #009345;
+    }
+    .highlight {
+      background-color: yellow;
+      font-weight: bold;
+    }
+
+</style>
+<style>
+    h1 {
+      margin-top: 0.5em;
+    }
+    article {
+      max-width: 950px;
+      margin: auto;
+    }
+    img.featured-image {
+        border-radius: 10px;
+    }
+    .post-details {
+        color: darkgrey;
+        font-size: 14px;
+        font-weight: 300;
+    }
+    .metaWrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 30px;
+    }
+    .metaWrapper p {
+      margin-bottom: 0;
+    }
+
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById("searchInput");
+    const clearInput = document.getElementById("clearInput");
+  
+    if (searchInput && clearInput) {
+      searchInput.addEventListener("input", function() {
+        clearInput.style.display = this.value ? "block" : "none";
+  
+        const searchTerm = this.value.toLowerCase();
+        const accordionItems = document.querySelectorAll('.accordion-item');
+  
+        accordionItems.forEach(function(item) {
+          const accordionText = item.textContent.toLowerCase();
+  
+          if (accordionText.includes(searchTerm)) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+  
+      clearInput.addEventListener("click", function() {
+        searchInput.value = "";
+        clearInput.style.display = "none";
+  
+        // Reset accordion items to show all
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        accordionItems.forEach(function(item) {
+          item.style.display = 'block';
+        });
+      });
+    }
+  });
+</script>

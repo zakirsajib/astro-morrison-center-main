@@ -1,0 +1,587 @@
+---
+const { ocladata } = Astro.props;
+//const currentPath = Astro.url.pathname;
+---
+
+<section class="ocla-hero mt-md">
+    <div class="container px-5">
+        <div class="row">
+            <div class="col-lg-4 col-sm-12 d-flex flex-column align-items-start justify-content-start pe-0 pe-lg-5 contact-info">
+                <div class="sticky-top sidebar">
+                    <h2 class="mb-0 pt-3" set:html={ocladata.title.rendered} />
+                    {ocladata.acf.location_details && ocladata.acf.location_details.map((locationItem, index) => (
+                    <div class="d-flex" key={index}>  
+                        <div class="flex-shrink-0">
+                            <img 
+                                src={locationItem.location_icon} 
+                                alt={ocladata.title.rendered} 
+                            />
+                        </div>
+                        <div class="location-info flex-grow-1 ms-3">
+                            {locationItem.details && (
+                                <div set:html={locationItem.details} />
+                            )}
+                        </div>
+                    </div> 
+                    ))}
+               </div> 
+             
+            </div>
+            <div class="col-lg-8 col-sm-12 d-flex flex-column ps-0 ps-lg-5">
+                
+                {ocladata.acf.section_headingtitle && (
+                    <div 
+                        class="loc-general-info pt-3" 
+                        set:html={ocladata.acf.section_headingtitle} 
+                    />
+                )}
+
+                 {/** Carousel */}   
+                 
+                 {ocladata.acf.location_gallery && (
+                 <div class="swiper gallerySwiper">
+                    <div class="swiper-wrapper" id="lg-swipper">
+                    {ocladata.acf.location_gallery && ocladata.acf.location_gallery.map((galleryItem, index) => (
+                        
+                            <a
+                                data-lg-size="1008-756"
+                                href={galleryItem.gallery_image.url}
+                                class="swiper-slide"
+                                key={index}
+                            >
+                            <img 
+                                src={galleryItem.gallery_image.sizes['medium']} 
+                                alt={galleryItem.gallery_image.alt}
+                                width={galleryItem.gallery_image.sizes['medium-width']}
+                                height={galleryItem.gallery_image.sizes['medium-height']}
+                            />
+                            </a>
+                        
+                    ))}
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                )}
+                
+                {ocladata.acf.location_contents && (
+                    <div 
+                        class="loc-general-info pt-3" 
+                        set:html={ocladata.acf.location_contents} 
+                    />
+                )}
+                
+                {ocladata.acf.multiple_column === 'Yes' ? (
+                <div class="row py-1">
+                    <div class="col-12 col-lg-5 featList">
+                        <ul class="list-group">
+                            {ocladata.acf.featured_list && ocladata.acf.featured_list.map((featuredItem, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                 {featuredItem.featured_item} </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div class="col-12 col-lg-7 featList">
+		                <ul class="list-group">
+                            {ocladata.acf.featured_list_2 && ocladata.acf.featured_list_2.map((featuredItem2, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                 {featuredItem2.featured_item} </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                ) : (
+                <div class="row py-1">
+                    <div class="col-12 featList">
+                        <ul class="list-group">
+                            {ocladata.acf.featured_list && ocladata.acf.featured_list.map((featuredItem, index) => (
+                                <li key={index}
+                                class="list-group-item">
+                                 {featuredItem.featured_item} </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                )}
+
+                {ocladata.acf.general_location_information_2 && (
+                    <div 
+                        class="loc-general-info pt-3" 
+                        set:html={ocladata.acf.general_location_information_2} 
+                    />
+                )}
+                
+                <!-- <div class="hstack gap-3">
+                    <div class="p-2 fw-semibold">
+                        <a class="message-us" href="/contact-us/">{ocladata.acf.message_us}</a></div>
+                    <div class="p-2 ms-auto morris-primary fw-semibold"><a href={`tel:+1-${ocladata.acf.call_us}`}><Image src={phoneAlt} width="22" height="22" alt="" /> Call Us</a>
+                    </div>
+                    <div class="p-2 morris-primary fw-semibold"><a href={ocladata.acf.find_us} target="_blank"><Image src={mapPin} width="12" height="22" alt="" /> Find Us</a></div>
+                </div> -->
+                
+                <!-- <img 
+                    class="rounded-4"
+                    src={ocladata.acf.location_image} 
+                    alt=""
+                    
+                />
+                <div class="pt-3" set:html={ocladata.acf.hipaa_form_code} /> -->
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials-video mt-md">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <h2 class="mb-0" set:html={ocladata.acf.success_stories} />
+        </div>
+        <div class="row">
+            
+            {ocladata.acf.testimonials_video && ocladata.acf.testimonials_video.map((tvideoItem, index) => (
+                
+                <div class="col-sm-12 col-md-6 col-lg-4 mb-0 mb-md-3">
+                    <div class="card pb-1" key={index}>
+                        <div class="card-body">  
+                            <div class="slideRight">
+                                <article 
+                                    class="pt-0" 
+                                    set:html={tvideoItem.testimonial_video} 
+                                />
+                            </div>
+                            <h3 class="card-title fs-5 lh-sm pt-5 pb-3 fw-bolder" set:html={tvideoItem.testimonial_title} />
+                            <p class="card-text" set:html={tvideoItem.testimonials_description} />
+                        </div>
+                    </div>
+                </div> 
+            
+            ))}
+        </div>
+    </div>
+</section>
+
+{/* 
+ <section class="faq mt-md">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <h2 class="mb-0" set:html={ocladata.acf.faqs_title} />
+        </div>
+        <div class="row">
+            <div class="accordion" id="accordionExample">
+                {ocladata.acf.faq_items && ocladata.acf.faq_items.map((faqItems, index) => (
+                    
+                    <div class="accordion-item" key={index}>
+                        <h3 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${index}`} aria-expanded="true" aria-controls={`#collapse${index}`}
+                                set:html={faqItems.faq_title} />
+                        </h3>
+                        <div id={`collapse${index}`} class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <p set:html={faqItems.faq_descriptions} />
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="team mt-md">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12 d-flex flex-column align-items-start justify-content-start pb-3">
+                <h2 set:html={ocladata.acf.team_section_heading} />
+            </div>
+        </div>
+        {ocladata.acf.team_section_details && (
+            <div class="row">
+                <div class="col-12 d-flex flex-column align-items-start justify-content-start pb-5" set:html={ocladata.acf.team_section_details} />
+            </div>
+        )}
+        <div class="row">
+            {ocladata.acf.teams && ocladata.acf.teams.map((teamItem, index) => (
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="card text-center" key={index} data-bs-toggle="modal" data-bs-target={`#staticBackdrop${index}`} >
+                        <img 
+                            class="mx-auto"
+                            src={teamItem.team_image} 
+                            width="150" 
+                            height="150" 
+                        />
+                        <div class="card-body">  
+                            <h5 class="card-title" set:html={teamItem.team_name} />
+                            <p class="card-text" set:html={teamItem.team_positiontitle} />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id={`staticBackdrop${index}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-4 d-flex flex-column align-items-center justify-content-center">
+                                            <div class="card text-center">
+                                                <img 
+                                                    class="mx-auto"
+                                                    src={teamItem.team_image} 
+                                                    width="150" 
+                                                    height="150" 
+                                                />
+                                                <div class="card-body">  
+                                                    <h5 class="card-title" set:html={teamItem.team_name} />
+                                                    <p class="card-text" set:html={teamItem.team_positiontitle} />
+                                                    {teamItem.team_email && (
+                                                        <a href={"mailto:" + teamItem.team_email} class="card-text">{teamItem.team_email}</a>
+
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-lg-8 d-flex flex-column align-items-start justify-content-start">
+                                            <p class="card-text" set:html={teamItem.team_details} />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>   
+              ))}
+        </div>
+    </div>
+</section>
+
+<section class="event mt-md">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12 d-flex flex-column align-items-start justify-content-start pb-0">
+                <h2 set:html={ocladata.acf.events_section_titleheading} />
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+            {ocladata.acf.morris_events && ocladata.acf.morris_events.map((carouselItem, index) => (
+                <div class="swiper-slide" key={index}>
+                <div class="slideTitle">
+                    <span set:html={carouselItem.events_title} />
+                    <span>:</span>
+                    <span class="event-date" set:html={carouselItem.event_date} />
+                </div>
+                <div class="slideDescr" set:html={carouselItem.event_descriptions} />
+                </div>
+            ))}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12 d-flex flex-column align-items-start justify-content-start pb-0">
+                {ocladata.acf.event_cta_button_label && (
+                    <a class="btn btn-primary btn-lg mt-0 mb-3" type="button" href={ocladata.acf.event_cta_button_url} set:html={ocladata.acf.event_cta_button_label} />
+                )}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="facility mt-md">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12 d-flex flex-column align-items-start justify-content-start pb-0">
+                <h2 set:html={ocladata.acf.facility_titleheading} />
+            </div>
+        </div>
+        <div class="row">
+            {ocladata.acf.facilities && ocladata.acf.facilities.map((facilityItem, index) => (
+                <div class="col-sm-12 col-md-6 col-lg-4 mb-0 mb-md-0">
+                    <div class="card pb-1" key={index}>
+                        <img 
+                            class="nn"
+                            src={facilityItem.facility_image} 
+                            alt=""
+                        />
+                    </div>
+                </div> 
+            ))}
+        </div>
+    </div>
+</section>
+
+
+
+<section class="partners pb-100 mt-md">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12 d-flex flex-column align-items-start justify-content-start pb-0">
+                <h2 set:html={ocladata.acf.partners_titleheading} />
+            </div>
+        </div>
+        <div class="row">
+            <div class="swiper partnersSwiper">
+                <div class="swiper-wrapper">
+                {ocladata.acf.partners && ocladata.acf.partners.map((partnerItem, index) => (
+                    <div class="swiper-slide" key={index}>
+                        <img 
+                            class="nn"
+                            src={partnerItem.partners_logo} 
+                            alt=""
+                            width="100"
+                            height="100"
+                        />
+                    </div>
+                ))}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+*/}
+
+
+<style is:inline>
+    .sticky-top.sidebar {
+        top: 50px
+    }
+    .swiper-slide {
+        margin-bottom: 50px;
+    }
+
+    .lg-toolbar-next:before {
+    content: "\e094";
+    }
+    .lg-toolbar-prev:before {
+    content: "\e095";
+    }
+
+</style>
+<style is:global>
+    .message-us:hover,
+    .location-info a {
+        border-bottom: 1px solid #009345;
+    }
+    
+    .sidebar h2 {
+        font-size: 28px;
+        line-height: 40px;
+    }
+    .loc-general-info h2 {
+        font-size: 20px;
+        padding-bottom: 0;
+        line-height: 25px;
+    }
+
+     /* .event-date {
+        color: #139249;
+    } */
+
+    .swiper-wrapper {
+        transition-timing-function: linear;
+    }
+
+    .swiper {
+        width: 100%;
+        height: 100%;
+        padding-top: 20px;
+    }
+    /*
+  .mySwiper .swiper-slide {
+      text-align: center;
+      background: linear-gradient(to bottom, #ffffff, #eeeded);
+      background: -webkit-linear-gradient(top, #ffffff, #eeeded);
+      background: -moz-linear-gradient(top, #ffffff, #eeeded);
+      background: -ms-linear-gradient(top, #ffffff, #eeeded);
+      background: -o-linear-gradient(top, #ffffff, #eeeded);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 50px 25px;
+      border-radius: 30px;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+      margin-bottom: 80px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .mySwiper .swiper-slide:hover {
+      transform: translate(0%, -5%);
+    }
+
+    .mySwiper .slideTitle {
+      font-size: 24px;
+      font-weight: 600;
+      color: #000;
+      padding-bottom: 15px;
+    }
+    .mySwiper .slideDescr {
+      border-top: 2px solid #009345;
+      padding-top: 40px;
+      line-height: 28px;
+      font-size: 16px;
+    }
+    
+     @media (min-width: 992px) {
+        .team .col-lg-3 {
+            width: 20%;
+        }
+    }  */
+
+    .contact-info {
+        z-index: 1;
+    }
+</style>
+
+
+<link href="https://cdn.jsdelivr.net/npm/lightgallery@2.0.0-beta.4/css/lightgallery.css" rel="stylesheet">
+
+<script type="text/partytown" src="https://unpkg.com/swiper@11.0.5/swiper-bundle.min.js"></script> 
+
+<script type="text/partytown">
+
+    const gallerySwiper = new Swiper(".gallerySwiper", {
+      slidesPerView: 3,
+      spaceBetween: 10,
+      //lazy: true,
+      //loop: true,
+      //autoHeight: true,
+      //speed:8000,
+      breakpoints: {
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 20
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 30
+        },
+        1200: {
+          slidesPerView: 3,
+          spaceBetween: 20
+        }
+    },
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
+
+//     navigation: {
+//     nextEl: ".swiper-button-next",
+//     prevEl: ".swiper-button-prev"
+//   },
+      
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },    
+
+    });
+  </script>
+
+<script>
+    import lightGallery from 'lightgallery';
+    //import lgZoom from 'lightgallery/plugins/zoom';
+    
+    let $lgSwiper = document.getElementById('lg-swipper');
+
+    const customButtons = `<button type="button" id="lg-toolbar-prev" aria-label="Previous slide" class="lg-toolbar-prev lg-icon">  </button><button type="button" id="lg-toolbar-next" aria-label="Next slide" class="lg-toolbar-next lg-icon">  </button>`;
+
+    $lgSwiper.addEventListener("lgInit", (event) => {
+  const pluginInstance = event.detail.instance;
+
+  
+  const $toolbar = pluginInstance.outer.find(".lg-toolbar");
+  $toolbar.prepend(customButtons);
+  document.getElementById("lg-toolbar-prev").addEventListener("click", () => {
+    pluginInstance.goToPrevSlide();
+  });
+  document.getElementById("lg-toolbar-next").addEventListener("click", () => {
+    pluginInstance.goToNextSlide();
+  });
+});
+
+    lightGallery($lgSwiper, {
+        speed: 500,
+        controls: true,
+        //showZoomInOutIcons: true
+        //plugins: [lgZoom]
+    });
+</script>
+
+
+
+{/* 
+ <script type="text/partytown">
+    const swiper = new Swiper(".mySwiper", {
+      slidesPerView: 3,
+      spaceBetween: 20,
+      //loop: true,
+      breakpoints: {
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 20
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 30
+        },
+        1200: {
+          slidesPerView: 3,
+          spaceBetween: 40
+        }
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    //   autoplay: {
+    //     delay: 4500,
+    //     disableOnInteraction: false,
+    //   },
+    });
+  </script> 
+
+<script type="text/partytown">
+    const partnersSwiper = new Swiper(".partnersSwiper", {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      lazy: true,
+      //loop: true,
+      speed:5000,
+      breakpoints: {
+        320: {
+          slidesPerView: 2,
+          spaceBetween: 20
+        },
+        768: {
+          slidesPerView: 4,
+          spaceBetween: 30
+        },
+        1200: {
+          slidesPerView: 8,
+          spaceBetween: 20
+        }
+      },
+      
+      autoplay: {
+        delay: 1,
+        disableOnInteraction: false,
+      },
+    });
+  </script> 
+*/}
+  

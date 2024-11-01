@@ -1,0 +1,248 @@
+---
+
+const { researchdata } = Astro.props;
+//console.log(researchdata);
+---
+
+<section class="research-hero pb-0 mt-md read-aloud">
+    <div class="container">
+        <div class="row">
+            <div class="d-flex gap-3 align-items-center flex-nowrap">
+                <img 
+                src={researchdata.acf.morris_center_logo} 
+                alt="/"
+                width="65"
+                height="61"
+            />
+            <h1 set:html={researchdata.title.rendered} />
+            </div>
+        </div>
+        <div class="row mt-5 mb-5 ps-3 pe-3 ps-sm-5 pe-sm-5">
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+                <div class="pe-0 pe-sm-5" set:html={researchdata.acf.left_column_one} />
+            </div>
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-end pt-0 pt-lg-5">
+                <div class="pt-0 pt-lg-5" set:html={researchdata.acf.right_column_one} />
+            </div>
+        </div>
+        <div class="row ps-3 pe-3 ps-sm-5 pe-sm-5">
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+                <div class="pe-0 pe-sm-5" set:html={researchdata.acf.left_column_two} />
+            </div>
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+                <div set:html={researchdata.acf.right_column_two} />
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="research-hero pb-0 mt-md read-aloud">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 ps-4 pe-4 ps-sm-5 pe-sm-5">
+                {researchdata.acf.research_descriptions_copy && researchdata.acf.research_descriptions_copy.map((researchItem, index) => (
+                    <div class="row">
+                        <div class="col-11 pt-md-1 pb-md-1 d-flex align-items-start justify-content-center">
+                            <div key={index} set:html={researchItem.r_descriptions} />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 pt-md-5  d-flex align-items-start justify-content-center imagecontainer">
+                            {researchItem.research_descriptions_image && researchItem.image_position === 'Left' ? (
+                            <div class="row">
+                                <div class="col-12 col-lg-8 pb-md-4">
+                                    <img 
+                                        src={researchItem.research_descriptions_image}
+                                        width="845"
+                                        height="464"
+                                        alt=""
+                                    />
+                                </div>
+                                <p class="caption fs-6 col-12 col-lg-4 d-flex pt-lg-5 pt-0 pb-5" set:html={researchItem.image_caption} />
+                            </div>
+                            ) : researchItem.research_descriptions_image && researchItem.image_position === 'Right' ? (
+                            <div class="row">
+                                <p class="caption fs-6 col-12 col-lg-4 d-flex pt-lg-5 pt-0 pe-5 pb-5" set:html={researchItem.image_caption} />
+                                <div class="col-12 col-lg-8 pb-md-4">
+                                    <img 
+                                        src={researchItem.research_descriptions_image}
+                                        width="845"
+                                        height="464"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            ) : null }
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="presentation-hero pb-50 mt-md mt-md-0 read-aloud">
+    <div class="container">
+        <div class="row ps-3 pe-3 ps-sm-5 pe-sm-5">
+            <h2 set:html={researchdata.acf.section_heading} />
+        </div>
+        <div class="row ps-3 pe-3 ps-sm-5 pe-sm-5">
+            {researchdata.acf.presentations_resources.map((resourceItem, index) => (
+                <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <div class="card text-center" key={index}>
+                        
+                        <div class="card-body"> 
+                            {/* 
+                            <div>
+                                <a 
+                                href={resourceItem.presentation_link} 
+                                target="_blank">
+                                    <img 
+                                    class="mx-auto"
+                                    src={resourceItem.presentation_thumbnail} 
+                                    width="80" 
+                                    height="80" 
+                                    />
+                                </a>
+                            </div> 
+                            */}
+                            <div>
+                                <a 
+                                    class="card-link" 
+                                    href={resourceItem.presentation_link} target="_blank">{resourceItem.presentation_title}
+                                </a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+
+<section class="further-research pb-100 mt-md mt-md-0 read-aloud">
+    <div class="container">
+        <div class="row ps-3 pe-3 ps-sm-5 pe-sm-5 mb-3">
+            <h2 set:html={researchdata.acf.section_heading_fourth} />
+        </div>
+        <div class="row ps-3 pe-3 ps-sm-5 pe-sm-5">
+            {researchdata.acf.further_research.map((fresearchItem, index) => (
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="card pe-5" key={index}>
+                        <div class="card-body">  
+                            <div class="research-title lh-sm">
+                            <a 
+                                class="card-link" 
+                                href={fresearchItem.further_research_link} target="_blank">{fresearchItem.further_research_title}
+                            </a>
+                            </div>
+                            <div>
+                            <a class="btn btn-primary btn-md mt-3 mb-3" type="button" target="_blank" href={fresearchItem.further_research_link}>View <span>Article</span></a></div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+
+
+<style is:global>
+    h2 {
+        padding-bottom: 20px;
+    }
+    span.number-one,
+    span.number-two {
+        position: relative;
+        padding-left: 45px;
+        margin-left: 0px;
+        display: block;
+    }
+    span.number-one::before,
+    span.number-two::before {
+        content: "1";
+        position: absolute;
+        left: 0px;
+        color: #008244;
+        font-size: 48px;
+        top: 15px;
+    }
+    span.number-two::before {
+        content: "2";
+    }
+
+    .presentation-hero .card {
+        background: linear-gradient(to bottom,#ffffff,#eeeded);
+        background: -webkit-linear-gradient(top,#ffffff,#eeeded);
+        border-radius: 20px;
+        padding: 20px 15px;
+        height: 100%;
+        border: 1px solid;
+    }
+    .presentation-hero .card:hover {
+        background: #fff;
+    }
+
+    .presentation-hero .card .card-body {
+        line-height: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .presentation-hero .card .card-link {
+        color: #262261;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    .presentation-hero .card .card-link:hover {
+        border-bottom: 2px solid #009345;
+    }
+    .caption {
+        line-height: 25px;
+    }
+    @media (max-width: 990px) {
+        .caption{
+            order: 1;
+        }
+    }
+    .further-research h2 {
+        padding-bottom: 0;
+    }
+    .further-research .card {
+        height: 100%;
+    }
+    .further-research .card-body {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: space-between;
+    }
+
+    .further-research .card-link {
+        line-height: 20px;
+        color: #262261;
+    }
+    .research-title {
+        position: relative;
+        padding-top: 45px;
+        padding-bottom: 20px;
+    }
+    .research-title::before {
+        content: '';
+        position: absolute;
+        border-top: 2px solid #009345;
+        width: 80%;
+        top: 35px;
+    }
+    .btn-md {
+        border-radius: 20px;
+        min-width: 180px;
+    }
+</style>

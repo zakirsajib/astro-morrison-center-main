@@ -1,0 +1,64 @@
+---
+const { whymorrisdata } = Astro.props;
+
+---
+
+<section class="why-morris-hero pb-5 mt-md read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            <div class="pe-6 text-black" set:html={whymorrisdata.acf.hero_section_contents} />
+        </div>
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-center justify-content-start">
+          {whymorrisdata.acf.hero_image && (
+            <div 
+                class="slideRight"
+                set:html={whymorrisdata.acf.hero_image} 
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="features pb-100 mt-sm read-aloud">
+    <div class="container ps-4 pe-4 ps-lg 1 pe-lg-1">
+        <div class="row">
+            {whymorrisdata.acf.features && whymorrisdata.acf.features.map((featItem, index) => (
+                
+                <div class="col-12 mb-0 mb-md-3">
+                    <div class="card pb-1" key={index}>
+                        <div class="card-body">  
+                            <h2 class="card-title fs-5 lh-sm pt-0 pb-3 fw-bolder" set:html={featItem.feature_titleheading} />
+                            <div class="card-text" set:html={featItem.feature_descriptions} />
+                        </div>
+                    </div>
+                </div> 
+            
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    .card {
+        background: linear-gradient(to bottom, #ffffff, #eeeded);
+        background: -webkit-linear-gradient(top, #ffffff, #eeeded);
+        background: -moz-linear-gradient(top, #ffffff, #eeeded);
+        background: -ms-linear-gradient(top, #ffffff, #eeeded);
+        background: -o-linear-gradient(top, #ffffff, #eeeded);
+        padding: 20px;
+        border-radius: 30px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+        cursor: text
+    }
+    .card-text {
+        color: #000;
+        font-size: 18px;
+    }
+    .card-text ol li {
+        list-style-type: upper-alpha;
+    }
+</style>

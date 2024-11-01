@@ -1,0 +1,616 @@
+---
+//import { Image } from 'astro:assets';
+import '../styles/swiper-bundle.min.css';
+//import legendSVG from '../img/legend.svg';
+const API_URL = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/7?_fields=acf`;
+
+const ACF_OPTIONS_EP = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/acf/v2/options/`;
+
+const res = await fetch(API_URL);
+const pageData = await res.json();
+//console.log(pageData.content.rendered);
+
+const resOptions = await fetch(ACF_OPTIONS_EP);
+const ACFData = await resOptions.json();
+
+// Assuming pageData is your JSON object
+// carouselItems = pageData.acf.carousel;
+
+// Check if carouselItems is an array and get its length
+//const numberOfCarouselItems = Array.isArray(carouselItems) ? carouselItems.length : 0;
+
+//console.log(`Number of carousel items: ${numberOfCarouselItems}`);
+
+
+const { navQueryLocations } = await import('../lib/api');
+const navQueryLocationsMenu = await navQueryLocations();
+const navLocationsMenu = navQueryLocationsMenu.menus.nodes[0]; 
+
+export {pageData, ACFData, navLocationsMenu};
+---
+
+
+<style>
+  
+  .heroImage,
+  video {
+    border-radius: 20px;
+  }
+
+  .secondRight video {
+    height: auto;
+    width: 100%;
+  }
+
+  @media (min-width: 990px) {
+    .secondRight video {
+      width: 50%;
+    }
+  }
+
+  .list-group-item.locationsTitle {
+    font-size: 24px;
+    font-weight: 600;
+    color: #262261;
+  }
+  @media (min-width: 1440px) {
+    .list-group {
+      gap: 1rem;
+    }
+  }
+  .list-group .list-group-item a:hover {
+    border-bottom: 1px solid #707070;
+  }
+
+  .swiper {
+    width: 100%;
+    height: 100%;
+    padding-top: 20px;
+  }
+
+  .mySwiper .swiper-slide {
+      text-align: center;
+      background: linear-gradient(to bottom, #ffffff, #eeeded);
+      background: -webkit-linear-gradient(top, #ffffff, #eeeded);
+      background: -moz-linear-gradient(top, #ffffff, #eeeded);
+      background: -ms-linear-gradient(top, #ffffff, #eeeded);
+      background: -o-linear-gradient(top, #ffffff, #eeeded);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 50px 25px;
+      border-radius: 30px;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+      margin-bottom: 80px;
+      transition: all 0.3s ease-in-out;
+    }
+
+  .mySwiper .swiper-slide:hover {
+      transform: translate(0%, -5%);
+    }
+
+  .mySwiper .slideTitle {
+      font-size: 24px;
+      font-weight: 600;
+      color: #000;
+      padding-bottom: 15px;
+    }
+  .mySwiper .slideDescr {
+      border-top: 2px solid #009345;
+      padding-top: 40px;
+      line-height: 28px;
+      font-size: 16px;
+    }
+    
+  .home-seventh {
+      background-color: #413C86;
+  }
+
+  .testimonialSwiper.swiper {
+    padding-bottom: 40px;
+  }
+  .slideHeading {
+    max-width: 75%;
+  }
+  .slideLeft {
+    max-width: 80%;
+  }
+
+  .slideRight {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+  }
+
+  #ctaTestimonial {
+    background-color: transparent;
+  }
+
+  .graphLegendOne li {
+    color: #262261;
+  }
+  .graphLegendOne li.first {
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .graphLegendOne li.second {
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  .graphLegendTwo li {
+    color: #262261;
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  .slider-container {
+      width: 80%;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .dot {
+      display: inline-block;
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      background-color: #bbb;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background-color: #555;
+    }
+
+    @media (min-width: 1200px) {
+      .slide {
+        min-width: calc(100% / 3);
+      }
+    }
+
+    @media (max-width: 1199px) and (min-width: 769px) {
+      .slide {
+        min-width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .slide {
+        min-width: 100%;
+      }
+    }
+    
+  
+</style>
+
+
+<section class="home-hero pb-0 mt-md read-aloud">
+  <div class="container ps-4 pe-4">
+    <div class="row">
+      <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+          <div class="pe-lg-5 heroBox text-black" set:html={pageData.acf.home_hero_descriptions} />
+      </div>
+      <div class="col-lg-6 col-sm-12 d-flex flex-column align-content-around justify-content-start">
+        
+        {pageData.acf.hero_image && (
+          <img class="heroImage" src={pageData.acf.hero_image} alt="" />
+        )}
+          {/*<video autoplay loop muted playsinline>
+            <source src={pageData.acf.hero_video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video> */}
+        
+        {pageData.acf.hero_video && (
+            <div 
+                class="slideRight"
+                set:html={pageData.acf.hero_video} 
+            />
+        )}
+        
+        
+        {/*<button class="btn btn-primary btn-lg consultation mx-auto mt-5 mb-3" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" set:html={ACFData.acf.banner_button_label} />*/}
+
+        <button class="btn btn-primary btn-lg consultation mx-auto mt-5 mb-3" type="button" onclick="Calendly.showPopupWidget('https://calendly.com/now-tmc-intake/free-consultation-tmc');return false;" set:html={ACFData.acf.banner_button_label} />
+
+        <div class="mx-auto small-text" set:html={pageData.acf.misc_texts} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="home-hero-second pt-5 pb-5 mt-sm read-aloud">
+  <div class="container ps-4 pe-4">
+    <div class="row">
+      <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+        {pageData.acf.extra_image && (
+          <img 
+              class="rounded-5" 
+              src={pageData.acf.extra_image.url} 
+              alt={pageData.acf.extra_image.alt}
+              width={pageData.acf.extra_image.width}
+              height={pageData.acf.extra_image.height}
+          />
+          )}
+    </div>
+      <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+          <div class="ps-lg-5 text-black" set:html={pageData.acf.extra_contents} />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="home-second pb-50 read-aloud">
+  <div class="container ps-4 pe-4">
+    <div class="row">
+      <div class="col-lg-7 col-sm-12 d-flex flex-column align-items-start justify-content-center leftCol">
+          <div class="pe-5 text-black" set:html={pageData.acf.section_contents} />
+      </div>
+      <div class="col-lg-5 col-sm-12 d-flex flex-column align-content-around justify-content-center">
+        {pageData.acf.section_contents_right && (
+          <div class="secondRight text-black" set:html={pageData.acf.section_contents_right} />
+        )}
+      </div>
+    </div>
+
+    <div class="row"> 
+      <div class="d-flex justify-content-center mt-5 mb-3">
+        <a class="btn btn-primary btn-lg ps-5 pe-5" type="button" href={pageData.acf.button_url_one} set:html={pageData.acf.button_label_one} />
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="home-third pb-50 read-aloud">
+  <div class="container ps-4 pe-4">
+    <div class="row">
+      <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+          <div class="pe-5 text-black" set:html={pageData.acf.third_section_contents} />
+          <div class="d-flex justify-content-center mt-5 mb-3">
+            <a class="btn btn-primary btn-lg ps-5 pe-5" type="button" href={pageData.acf.button_url_two} set:html={pageData.acf.button_label_two} />
+          </div>
+      </div>
+      <div class="col-lg-6 col-sm-12 d-flex flex-column align-content-around justify-content-center">
+        {pageData.acf.section_contents_right_third && (
+          <div class="secondRight text-black">
+            <img 
+              class="rounded-5"
+              src={pageData.acf.section_contents_right_third} 
+              alt="NOW! Programs® NICHD RCT Outcomes 5 Year Olds, High Risk for Dyslexia" 
+              width="647"
+              height="500"
+            />
+          {/* 
+          <video id="graph" autoplay muted playsinline>
+            <source src={pageData.acf.section_contents_right_third} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          */}
+          </div>
+        )}
+        
+        <!-- <div class="row">
+          <div class="col-lg-12 d-flex flex-row justify-content-start">
+            <ul class="graphLegendOne">
+              <li class="list-group-item first">Academic Functions – <Image src={legendSVG} width="120" height="22" alt="" /></li>
+              <li class="list-group-item second">Wechsler Individual Achievement Test</li>
+            </ul>
+          </div>
+          
+        </div>      -->
+
+        <!-- <div class="row">
+          <div class="col-lg-5 d-flex flex-row justify-content-start">
+            <ul class="graphLegendTwo">
+              <li class="list-group-item">1 - Pseudoword Decoding</li>
+              <li class="list-group-item">2 - Word Reading</li>
+            </ul>
+          </div>
+          <div class="col-lg-5 d-flex flex-row justify-content-start">
+            <ul class="graphLegendTwo">
+              <li class="list-group-item">3 - Reading Comprehension</li>
+              <li class="list-group-item">4 - Written Expression</li>
+            </ul>
+          </div>
+        </div>  -->
+      
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="home-fourth pb-50 read-aloud">
+  <div class="container ps-4 pe-4">
+    <div class="row">
+      <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+          <div class="pe-5 text-black" set:html={pageData.acf.fourth_section_contents} />
+      </div>
+      <div class="col-lg-6 col-sm-12 d-flex flex-column align-content-around justify-content-end">
+        {pageData.acf.section_contents_right_fourth && (
+          <div class="secondRight text-black" set:html={pageData.acf.section_contents_right_fourth} />
+        )}
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          {pageData.acf.carousel.map((carouselItem, index) => (
+            <div class="swiper-slide" key={index}>
+              <div class="slideTitle" set:html={carouselItem.carousel_title} />
+              <div class="slideDescr" set:html={carouselItem.carousel_descriptions} />
+            </div>
+          ))}
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+
+      
+
+  </div>
+    
+  <div class="container">
+    <div class="row"> 
+      <div class="d-flex justify-content-center mt-4 mb-3">
+        <a class="btn btn-primary btn-lg ps-5 pe-5" type="button" href={pageData.acf.button_url_three} set:html={pageData.acf.button_label_three} />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="home-fifth pb-50 read-aloud">
+  <div class="container ps-4 pe-4">
+    <div class="row">
+      <div class="col-lg-4 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+          <div class="pe-5 text-black" set:html={pageData.acf.section_contents_fifth} />
+      </div>
+      <div class="col-lg-8 col-sm-12 d-flex flex-column align-content-around justify-content-center">
+        {pageData.acf.section_contents_right_fifth && (
+          <div class="secondRight text-black" set:html={pageData.acf.section_contents_right_fifth} />
+        )}
+
+        <div class="d-flex justify-content-start mt-5 mb-3">
+          <a class="btn btn-primary btn-lg ps-5 pe-5" type="button" href={pageData.acf.button_url_fifth} set:html={pageData.acf.button_label_fifth} />
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+<section class="home-sixth pb-50 read-aloud">
+  <div class="container ps-4 pe-4">
+    <nav>
+      <ul class="d-flex flex-xl-row flex-lg-column flex-md-column flex-sm-column flex-column list-group list-group-horizontal">
+          <li class="list-group-item locationsTitle">The Morris Center Locations:</li>
+          {navLocationsMenu.menuItems.nodes.map((menuItem, index) => (
+              <li class="list-group-item" key={index}>
+                <a href={menuItem.uri}>{menuItem.label}</a>
+              </li>
+            ))}
+      </ul>
+  </nav>
+  </div>
+</section>
+
+<section class="home-seventh pt-100 pb-50 read-aloud">
+  <div class="container ps-4 pe-4">
+    
+    <!-- <div class="row">
+      <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+        <div class="slideHeading" set:html={pageData.acf.testimonial_heading} />
+      </div>
+    </div> -->
+    <div class="row">
+      <div class="swiper testimonialSwiper">
+        <div class="swiper-wrapper">
+          {pageData.acf.carousel_testimonial.map((carouselTestimonialItem, index) => (
+            <div class="swiper-slide" key={index}>
+            <div class="row">
+              <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+                <div class="slideHeading" set:html={pageData.acf.testimonial_heading} />
+                <div class="slideLeft" set:html={carouselTestimonialItem.testimonail_descriptions} />
+              </div>
+              <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+                <div class="slideRight" set:html={carouselTestimonialItem.testimonial_video} />
+              </div>
+            </div>  
+            </div>
+          ))}
+        </div>
+        
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start"></div>
+      <div class="col-lg-6 col-sm-12 d-flex justify-content-center justify-content-md-center justify-content-xl-end mt-1 mb-1">
+        <a class="btn btn-primary btn-lg ps-5 pe-5" id="ctaTestimonial" type="button" href={pageData.acf.button_url_sixth} set:html={pageData.acf.button_label_sixth} />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script type="text/partytown" src="/scripts/swiper-bundle.min.js"></script>
+
+<script type="text/partytown">
+  //document.addEventListener("DOMContentLoaded", function() {
+  const swiper = new Swiper(".mySwiper", {
+    slidesPerView: 3,
+    spaceBetween: 20,
+    //loop: true,
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 20
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 30
+      },
+      1200: {
+        slidesPerView: 3,
+        spaceBetween: 40
+      }
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    // autoplay: {
+    //   delay: 4500,
+    //   disableOnInteraction: false,
+    // },
+  });
+
+//});
+</script>
+
+{/* 
+<script type="text/partytown">
+  //document.addEventListener("DOMContentLoaded", function() {
+  const testimonialSwiper = new Swiper(".testimonialSwiper", {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    effect: 'fade',
+    fadeEffect: {
+      crossFade: true
+    },
+    //loop: true,
+    // breakpoints: {
+    //   320: {
+    //     slidesPerView: 1,
+    //     spaceBetween: 20
+    //   },
+    //   480: {
+    //     slidesPerView: 2,
+    //     spaceBetween: 30
+    //   },
+    //   768: {
+    //     slidesPerView: 3,
+    //     spaceBetween: 40
+    //   }
+    // },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  
+  });
+//});
+</script>
+*/}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Videos
+    var videos = document.querySelectorAll("video");
+
+    var videoOptions = {
+      root: null, // use the viewport as the root
+      rootMargin: "0px",
+      threshold: 0.5 // trigger when 50% of the video is visible
+    };
+
+    var videoObserver = new IntersectionObserver(handleVideoIntersect, videoOptions);
+
+    videos.forEach(function (video) {
+      videoObserver.observe(video);
+    });
+
+    // Iframes
+    var iframes = document.querySelectorAll('.swiper-slide iframe');
+
+    var iframeOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5 // Adjust this threshold as needed
+    };
+
+    var iframeObserver = new IntersectionObserver(handleIframeIntersect, iframeOptions);
+
+    iframes.forEach(function (iframe) {
+      iframeObserver.observe(iframe);
+    });
+
+    function handleVideoIntersect(entries, observer) {
+      entries.forEach(function (entry) {
+        var video = entry.target;
+
+        if (entry.isIntersecting) {
+          video.play(); // start playing when in viewport
+        } else {
+          video.pause(); // pause when not in viewport
+        }
+      });
+    }
+
+    function handleIframeIntersect(entries, observer) {
+      entries.forEach(function (entry) {
+        var iframe = entry.target;
+
+        if (entry.isIntersecting) {
+          var iframeSrc = iframe.getAttribute('data-src');
+          iframe.src = iframeSrc;
+          observer.unobserve(iframe);
+        }
+      });
+    }
+  });
+</script>
+
+
+{/*  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+  var videos = document.querySelectorAll("video");
+
+  var options = {
+    root: null, // use the viewport as the root
+    rootMargin: "0px",
+    threshold: 0.5 // trigger when 50% of the video is visible
+  };
+
+  var observer = new IntersectionObserver(handleIntersect, options);
+
+  videos.forEach(function (video) {
+    observer.observe(video);
+  });
+
+  function handleIntersect(entries, observer) {
+    entries.forEach(function (entry) {
+      var video = entry.target;
+
+      if (entry.isIntersecting) {
+        video.play(); // start playing when in viewport
+      } else {
+        video.pause(); // pause when not in viewport
+      }
+    });
+  }
+});
+</script> */}

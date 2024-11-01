@@ -1,0 +1,395 @@
+---
+import defaultFooterbannerImage from '../img/footer-cta-bg.webp';
+import aboutFooterBanner from '../img/Rectangle-79.webp';
+
+const currentPath = Astro.url.pathname;
+
+const API_URL_ABOUT = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/2?_fields=acf.about_banner_text,acf.about_banner_label,acf.about_banner_button_url,acf.cta_text,acf.cta_button_label,acf.cta_button_url`;
+const resAbout = await fetch(API_URL_ABOUT);
+const aboutData = await resAbout.json();
+
+// Speech Language Pathology Footer
+const API_URL_SLP = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/pages/83?_fields=acf.footer_banner_image,acf.footer_banner_text,acf.footer_banner_label`;
+const resSlp = await fetch(API_URL_SLP);
+const slpData = await resSlp.json();
+
+const slpFooterBanner = slpData.acf.footer_banner_image;
+
+const ACF_OPTIONS_EP = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/acf/v2/options/`;
+
+const res = await fetch(ACF_OPTIONS_EP);
+const ACFData = await res.json();
+//console.log(ACFData.acf);
+
+const { navQueryFooterOne, navQueryFooterTwo, navQueryFooterThree, navQueryFooterFour, navQueryFooterFive } = await import('../lib/api');
+
+const dataFooterOne = await navQueryFooterOne();
+const dataFooterTwo = await navQueryFooterTwo();
+const dataFooterThree = await navQueryFooterThree();
+const dataFooterFour = await navQueryFooterFour();
+const dataFooterFive = await navQueryFooterFive();
+
+const footerOneMenu = dataFooterOne.menus.nodes[0]; 
+const footerTwoMenu = dataFooterTwo.menus.nodes[0];
+const footerThreeMenu = dataFooterThree.menus.nodes[0];
+const footerFourMenu = dataFooterFour.menus.nodes[0];
+const footerFiveMenu = dataFooterFive.menus.nodes[0];
+
+//const defaultFooterbannerImage = ACFData.acf.banner_image;
+//const aboutFooterBanner = aboutData.acf.about_banner_image;
+
+
+export {ACFData, footerOneMenu, footerTwoMenu, footerThreeMenu, footerFourMenu, footerFiveMenu, aboutData, slpData};
+
+//console.log(aboutFooterBg);
+//console.log(currentPath);
+
+---
+
+<style>
+    .footer-cta {
+        /* background-image: url('https://astromorrison.wpenginepowered.com/wp-content/uploads/2023/11/footer-cta-bg.webp'); */
+        /* background: url({`#${ACFData.acf.banner_image}`}); */
+        /* background-image: url('${ACFData.acf.banner_image}'); */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 570px;
+    } 
+
+    .display-6 {
+        line-height: 60px;
+    }
+    .list-group-item {
+        border: 0;
+    }
+    .list-group-item a {
+        color: var(--bs-body-color);
+        text-decoration: none;
+    }
+    .footer-current-menu,
+    .list-group-item a:hover {
+        border-bottom: 1px solid #707070;
+    }
+    
+    .copyright p {
+        font-weight: 300;
+        font-size: 16px;
+        color: var(--bs-body-color);
+        margin-bottom: 0;
+    }
+    .footerSocial li a:hover {
+        text-decoration: none;
+        border-bottom: 0;
+    }
+    @media (max-width: 990px) {
+        .footer-cta {
+            background-position: 100%;
+            height: 350px;
+        }
+        .display-6 {
+            line-height: 40px;
+        }
+    }
+    footer .list-group-item {
+        line-height: 25px;
+    }
+    footer .list-group-item a {
+      font-size: 16px;
+    }
+
+
+
+</style>
+<audio id="ra-audio" data-lang="en-US" data-voice="Amazon2 Danielle" data-key="c8e9584cdf086c8357dfde86e734bfb8"></audio>
+<script is:inline>function readAloud(e,n){var s="https://assets.readaloudwidget.com/embed/",t=(/iPad|iPhone|iPod/.test(navigator.userAgent)&&(e.src=s+"sound/silence.mp3",e.play(),"undefined"!=typeof speechSynthesis&&speechSynthesis.speak(new SpeechSynthesisUtterance(" "))),document.createElement("script"));t.onload=function(){readAloudInit(e,n)},t.src=s+"js/readaloud.min.js",document.head.appendChild(t)}</script>
+
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script>
+    // import 'bootstrap/dist/js/bootstrap.min.js';
+    import 'bootstrap/js/dist/button.js';
+    import 'bootstrap/js/dist/modal.js';
+    import 'bootstrap/js/dist/collapse.js';
+    import 'bootstrap/js/dist/tab.js';
+
+</script>
+
+ {/* 
+ <script>!function(){var b=function(){window.__AudioEyeSiteHash = "478b756de74d4e9b8dac4d36efbac48a"; var a=document.createElement("script");a.src="https://wsmcdn.audioeye.com/aem.js";a.type="text/javascript";a.setAttribute("async","");document.getElementsByTagName("body")[0].appendChild(a)};"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",b):window.attachEvent&&window.attachEvent("onload",b):b()}();</script>
+
+ <script async src="https://widget.websitevoice.com/1XFSsDk6-LdirnmIMwJQJA"></script> 
+ <script>
+  window.wvData=window.wvData||{};function wvtag(a,b){wvData[a]=b;}
+  wvtag('id', '1XFSsDk6-LdirnmIMwJQJA');
+  wvtag('gender', 'female');
+  wvtag('article', 'section', '.post-content', '.blog-body', '.post_content', '.content', '.section', 'h1', '.text-to-read', '.btn', 'button');
+  wvtag('widget-style', {
+    showTooltip: true,
+    tooltipText: 'Listen to page content'
+  });
+</script> 
+*/}
+
+<script is:inline async src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
+
+{currentPath === '/contact-us/ocala-florida/' && (
+    <style>
+        .footer-cta {display: none!important;}
+    </style>
+)}
+{currentPath === '/contact-us/jacksonville-florida/' && (
+<style>
+    .footer-cta {display: none!important;}
+</style>
+)}
+{currentPath === '/contact-us/trinidad-and-tobago/' && (
+<style>
+    .footer-cta {display: none!important;}
+</style>
+)}
+
+{currentPath === '/contact-us/' && (
+<style>
+    .footer-cta {display: none!important;}
+</style>
+)}
+
+{currentPath === '/locations/' && (
+<style>
+    .footer-cta {display: none!important;}
+</style>
+)}
+
+{currentPath === '/services/testing/' && (
+<style>
+    .footer-cta {display: none!important;}
+</style>
+)}
+
+{currentPath === '/transdisciplinary-approach/' && (
+<style>
+    .footer-cta {display: none!important;}
+</style>
+)}
+
+  
+
+
+
+  
+
+
+
+
+<footer>
+    {currentPath === '/about/' ? (
+        
+    <div class="read-aloud footer-cta d-flex flex-column align-items-center justify-content-center" id="footerAbout" style={{backgroundImage:`url('${aboutFooterBanner.src}')`}}>
+     
+        <div class="container">
+            <div class="row"> 
+                <div class="col-lg-6 col-sm-12 ps-4 pe-4">
+
+                        {aboutData && aboutData.acf.about_banner_text && (
+                        <h2 class="display-6 fw-bold text-white mb-1" set:html={aboutData.acf.about_banner_text} />
+                        )}
+                        {aboutData && aboutData.acf.about_banner_label && (
+                        
+                        <button class="btn btn-light btn-lg consultation ps-4 pe-4" type="button" onclick="Calendly.showPopupWidget('https://calendly.com/now-tmc-intake/free-consultation-tmc');return false;" set:html={aboutData.acf.about_banner_label}></button>
+                        
+                        )}
+                        
+                    
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </div> 
+    <div class="d-flex flex-column align-items-center justify-content-center pt-5 pb-5 ps-4 pe-4 read-aloud">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-center justify-content-center">
+                    {aboutData && aboutData.acf.cta_text && (
+                        <h2 class="display-6 fw-bold text-blue mb-1 mb-lg-0 pb-lg-0" set:html={aboutData.acf.cta_text} />
+                    )} 
+                </div>
+                <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-center justify-content-center">
+                    {aboutData && aboutData.acf.cta_button_label && (
+                        <a class="w-50 fw-semibold text-uppercase btn btn-primary btn-lg ps-4 pe-4" type="button" href={aboutData.acf.cta_button_url} set:html={aboutData.acf.cta_button_label}></a>
+                    )}
+                </div>  
+            </div>
+        </div>
+    </div>
+
+ ) : currentPath === '/services/speech-language-pathology/' ? (
+        
+        <div class="read-aloud footer-cta d-flex flex-column align-items-center justify-content-center" id="footerAbout" style={{backgroundImage:`url('${slpFooterBanner}')`}}>
+         
+            <div class="container">
+                <div class="row"> 
+                    <div class="col-lg-6 col-sm-12 ps-4 pe-4">
+    
+                            {slpData && slpData.acf.footer_banner_text && (
+                            <h2 class="display-6 fw-bold text-white mb-1" set:html={slpData.acf.footer_banner_text} />
+                            )}
+                            {slpData && slpData.acf.footer_banner_label && (
+                            
+                            <button class="btn btn-light btn-lg consultation ps-4 pe-4" type="button" onclick="Calendly.showPopupWidget('https://calendly.com/now-tmc-intake/free-consultation-tmc');return false;" set:html={slpData.acf.footer_banner_label}></button>
+                            
+                            )}
+                            
+                        
+                    </div>
+                    <div class="col"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+    ) : (
+    <div class="read-aloud footer-cta d-flex flex-column align-items-center justify-content-center" style={{backgroundImage:`url('${defaultFooterbannerImage.src}')`}}>
+        <div class="container">
+            <div class="row"> 
+                <div class="col-lg-6 col-sm-12">
+
+                        {ACFData && ACFData.acf.banner_text && (
+                        <h2 class="display-6 fw-bold text-white mb-1" set:html={ACFData.acf.banner_text} />
+                        )}
+                        {ACFData && ACFData.acf.banner_button_label && (
+                        
+
+                        <button class="btn btn-light btn-lg consultation ps-4 pe-4" type="button" onclick="Calendly.showPopupWidget('https://calendly.com/now-tmc-intake/free-consultation-tmc');return false;" set:html={ACFData.acf.banner_button_label}></button>    
+
+                        )}
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </div>
+
+    )} 
+    
+    <div class="container mt-5 mb-4">
+        <div class="row"> 
+            <div class="col-12 col-sm-4 col-lg-2">
+                {ACFData.acf.footer_logo ? (
+                    <a aria-label="Footer Logo Morrison Center" href="/" set:html={ACFData.acf.footer_logo} />
+                  ) : (
+                    <p>No image available</p>
+                  )}
+                  
+            </div>
+            <div class="col-12 col-sm-4 col-lg-3 pt-3">
+                <nav>
+                    <ul class="list-group">
+                        {footerOneMenu.menuItems.nodes.map((menuItem, index) => (
+                            <li class="list-group-item" key={index}>
+                              <a class={currentPath === menuItem.uri ? "footer-current-menu" : ""} href={menuItem.uri} target={menuItem.target}>{menuItem.label}</a>
+                            </li>
+                          ))}
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-12 col-sm-4 col-lg-3 pt-3">
+                <nav>
+                    <ul class="list-group">
+                        {footerTwoMenu.menuItems.nodes.map((menuItem, index) => (
+                            <li class="list-group-item" key={index}>
+                              <a class={currentPath === menuItem.uri ? "footer-current-menu" : ""} href={menuItem.uri}>{menuItem.label}</a>
+                            </li>
+                          ))}
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-12 col-sm-4 col-lg-2 pt-3">
+                <nav>
+                    <ul class="list-group">
+                        {footerThreeMenu.menuItems.nodes.map((menuItem, index) => (
+                            <li class="list-group-item" key={index}>
+                              <a class={currentPath === menuItem.uri ? "footer-current-menu" : ""} href={menuItem.uri}>{menuItem.label}</a>
+                            </li>
+                          ))}
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-12 col-sm-4 col-lg-2 pt-3">
+                <nav>
+                    <ul class="list-group">
+                        {footerFourMenu.menuItems.nodes.map((menuItem, index) => (
+                            <li class="list-group-item" key={index}>
+                              <a class={currentPath === menuItem.uri ? "footer-current-menu" : ""} href={menuItem.uri}>{menuItem.label}</a>
+                            </li>
+                          ))}
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-12 col-sm-4 col-lg-2 pt-3">
+                <nav>
+                    <ul class="list-group">
+                        {footerFiveMenu.menuItems.nodes.map((menuItem, index) => (
+                            <li class="list-group-item" key={index}>
+                              <a class={currentPath === menuItem.uri ? "footer-current-menu" : ""} href={menuItem.uri}>{menuItem.label}</a>
+                            </li>
+                          ))}
+                    </ul>
+                </nav>
+            </div>
+        </div>   
+        <div class="d-flex justify-content-center pt-5 pb-3"> 
+            <ul class="list-group list-group-horizontal footerSocial">
+                <li class="list-group-item"><a aria-label="Facebook Morrison Center" href="https://www.facebook.com/themorriscenter" target="_blank"><img src="/img/facebook.svg" width="29.428" height="29.25" alt="Facebook Morrison Center"></a></li>
+                <li class="list-group-item"><a aria-label="Twitter Morrison Center" href="#" target="_blank"><img src="/img/xlogo.svg" width="31.236" height="25.418" alt="Twitter Morrison Center"></a></li>
+                <li class="list-group-item"><a aria-label="LinkedIn Morrison Center" href="https://www.linkedin.com/in/timconwayphdthemorriscenter" target="_blank"><img src="/img/linkedin.svg" width="26.915" height="26.915" alt="LinkedIn Morrison Center"></a></li>
+                <li class="list-group-item"><a aria-label="Youtube Morrison Center" href="#" target="_blank"><img src="/img/youtube.svg" width="38.4" height="27" alt="Youtube Morrison Center"></a></li>
+            </ul>
+        </div>
+        <div class="d-flex justify-content-center copyright"> 
+        <p>© {new Date().getFullYear()} The Morris Center, Inc. All rights reserved. </p>
+        </div>
+    </div> 
+</footer>
+
+{/*
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title fs-5" id="exampleModalLabel" set:html="Schedule Your Consultation" />
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="https://usebasin.com/f/<YOUR_FORM_ID>" method="POST">
+            <div>
+                <label>First Name </label>
+                <input type="text" name="name" id="name" class="form-control" required />
+            </div>
+            <div>
+                <label>Email </label>
+                <input type="email" name="email" id="email" required class="form-control" />
+            </div>
+            <div>
+                <label>Subject </label>
+                <input type="text" name="subject" id="subject" class="form-control" required />
+            </div>
+            <div>
+                <label>Message </label>
+                <textarea class="form-control" id="message" name="message" rows="10" cols="33" />
+            </div>
+            <div>
+                <button class="btn btn-primary btn-lg ps-5 pe-5 mt-3 mb-3" type="submit">Submit</button>
+            </div>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>   
+*/}
+
+  {/* <button class="btn btn-light btn-lg consultation ps-4 pe-4" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" set:html={aboutData.acf.about_banner_label}></button> */}
+
+  {/*button class="btn btn-light btn-lg consultation ps-4 pe-4" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" set:html={ACFData.acf.banner_button_label}></button>*/}
+
+  

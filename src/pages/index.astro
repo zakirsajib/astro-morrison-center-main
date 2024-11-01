@@ -1,0 +1,21 @@
+---
+import Home from "../components/Home.astro";
+//import PostCard from "../components/PostCard.astro";
+import MainLayout from "../layouts/MainLayout.astro";
+//import { homePagePostsQuery } from "../lib/api";
+
+//const data = await homePagePostsQuery();
+//const posts = data.posts.nodes;
+
+Astro.response.headers.set('Cache-Control', 'public, max-age=604800, immutable');
+
+
+---
+
+<MainLayout title='Home Page'>
+  <main>
+    <Home></Home>
+  </main>
+</MainLayout>
+
+

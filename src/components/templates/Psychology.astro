@@ -1,0 +1,145 @@
+---
+const { psychologydata } = Astro.props;
+
+---
+
+<style is:inline>
+    video {
+        border-radius: 20px;
+    }
+    .card {
+        background: linear-gradient(to bottom, #ffffff, #eeeded);
+        background: -webkit-linear-gradient(top, #ffffff, #eeeded);
+        background: -moz-linear-gradient(top, #ffffff, #eeeded);
+        background: -ms-linear-gradient(top, #ffffff, #eeeded);
+        background: -o-linear-gradient(top, #ffffff, #eeeded);
+        padding: 20px;
+        border-radius: 30px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+        cursor: text
+    }
+    .testing-hero .card {
+        padding: 10px 20px;
+    }
+
+    .card-text {
+        color: #000;
+        font-size: 18px;
+    }
+    .testing-phase-1 a {
+        border-bottom: 2px solid #009345;
+    }
+    h4 {
+        font-size: 18px;
+    }
+    
+    span.number-three,
+    span.number-four {
+        position: relative;
+        padding-left: 45px;
+        margin-left: 0px;
+        display: block;
+    }
+    span.number-three::before,
+    span.number-four::before {
+        content: "3";
+        position: absolute;
+        left: 0px;
+        color: #008244;
+        font-size: 48px;
+        top: 0;
+    }
+    span.number-four::before {
+        content: "4";
+    }
+
+    .testing-phase-1-summary {
+        background-color: #413C86;
+    }
+
+    .testing-phase-1-summary .card {
+        height: 100%;
+    }
+
+    .testing-phase-1-summary .card-text ul {
+        padding-top: 1rem;
+    }
+    .testing-phase-1-summary .card-text ul li {
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+    
+    span.number-one::before, 
+    span.number-two::before {
+        top: 0;
+    }
+    
+</style>
+
+
+<section class="testing-hero pb-5 mt-md read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+            {psychologydata.acf.left_section && (
+                <div class="pe-5 text-black" set:html={psychologydata.acf.left_section} />
+            )}
+        </div>
+        <div class="col-lg-6 col-sm-12 d-flex flex-column align-content-around justify-content-start">
+            {psychologydata.acf.right_section && (
+                <div set:html={psychologydata.acf.right_section} />
+            )}    
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<section class="testing-phase-1 pb-5 mt-sm read-aloud">
+    <div class="container ps-5 pe-5">
+      <div class="row">
+        <div class="col-12">
+            {psychologydata.acf.phase_1_contents && (
+                <div 
+                    set:html={psychologydata.acf.phase_1_contents} 
+                />
+            )}
+        </div>
+
+        <div class="col-12">
+            <div class="card mb-5 mt-3">
+                <div class="row g-0 d-flex flex-row align-items-start justify-content-center">
+                    {psychologydata.acf.phase_1_evaluation_components.map((componentItem, index) => (
+                        <div class="col-md-12 col-lg-4" key={index}>
+                            <div 
+                                class="card-body" set:html={componentItem.component_one}
+                            />
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <div 
+                                class="card-body" set:html={componentItem.component_two}
+                            />
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <div 
+                                class="card-body" set:html={componentItem.component_three}
+                            />
+                        </div>
+                    ))}
+                </div>
+              </div>
+        </div>
+
+
+        <div class="col-12">
+            {psychologydata.acf.phase_1_more_contents && (
+                <div 
+                    set:html={psychologydata.acf.phase_1_more_contents} 
+                />
+            )}
+        </div>
+      </div>
+    </div>
+</section>

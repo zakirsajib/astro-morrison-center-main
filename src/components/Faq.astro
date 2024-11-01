@@ -1,0 +1,29 @@
+---
+const API_URL_FRE = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/frequently_asked_que?per_page=30&orderby=date&order=desc`;
+const resFre = await fetch(API_URL_FRE);
+const freData = await resFre.json();
+
+// Data passed from Faqs.astro
+const { collapse } = Astro.props;
+
+export {freData};
+
+---
+<div class="accordion" id="accordionExample">
+    {freData.length > 0 ? (    
+        freData.map((faqItems, index) => (
+            
+            <div class="accordion-item" key={index}>
+                <h3 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${index}`} aria-expanded="true" aria-controls={`#collapse${index}`}
+                        set:html={faqItems.title.rendered} />
+                </h3>
+                <div id={`collapse${index}`} class={`accordion-collapse collapse ${collapse}`} data-bs-parent="#accordionExample">
+                    <div class="accordion-body" set:html={faqItems.content.rendered} />
+                </div>
+            </div>
+        ))
+    ) : (
+        <h3 class="badge text-bg-warning">No FAQs found.</h3>
+    )}
+</div>

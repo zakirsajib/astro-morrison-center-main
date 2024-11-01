@@ -1,0 +1,393 @@
+---
+
+const { careerdata } = Astro.props;
+
+---
+
+<section class="careers-hero pb-100 mt-md read-aloud">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-start">
+                <h1 set:html={careerdata.acf.hero_title} />
+                <article class="w-75" set:html={careerdata.acf.left_column} />
+                <a class="hero-cta btn btn-primary btn-lg ps-5 pe-5" type="button" href="#positions" set:html={careerdata.acf.button_label} />
+            </div>
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-end justify-content-end pt-0">
+                {careerdata.acf.right_column && careerdata.acf.right_column.map((rightColumnItem, index) => (
+                    <img 
+                        src={rightColumnItem.employee_image}
+                        width="265"
+                        height="318"
+                        alt={rightColumnItem.employee_name}
+                    />
+                    <div class="employee-info d-flex flex-column align-items-start justify-content-center">
+                        <h4 set:html={rightColumnItem.employee_name} />
+                        <h5 class="fs-6 fw-light" set:html={rightColumnItem.employee_title} />
+                        <p class="fw-lighter lh-base fst-italic" set:html={rightColumnItem.employee_description} />
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>
+<section class="careers-second pb-50 read-aloud">
+    
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="pe-0 col-12" set:html={careerdata.acf.carousel_section_heading} />
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="container-fluid">
+    
+        <div class="swiper careerSwiper">
+          <div class="swiper-wrapper">
+            {careerdata.acf.career_carousel.map((carouselItem, index) => (
+              <div class="swiper-slide" key={index}>
+                <div class="slideTitle" set:html={carouselItem.carousel_title} />
+                <div class="slideDescr" set:html={carouselItem.carousel_description} />
+              </div>
+            ))}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+        
+  
+    </div>
+
+</section>
+<section class="careers-perks pb-50 mt-md read-aloud">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="pe-0 col-12" set:html={careerdata.acf.heading_third_section} />
+            </div>
+        </div>
+        <div class="row">
+            {careerdata.acf.perks.map((perksItem, index) => (
+                <div class="col-sm-6 col-md-4 mb-3">
+                    <div class="card pb-4" key={index}>
+                        <div class="card-body">  
+                            <h3 class="card-title lh-lg pb-3 fw-medium" set:html={perksItem.perks_title} />
+                            <p class="card-text" set:html={perksItem.perks_descriptions} />
+                        </div>
+                    </div>
+                </div> 
+            ))}
+        </div>
+    </div>
+</section>
+
+<section class="careers-positions pb-50 mt-md read-aloud" id="positions">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12 d-flex flex-column align-items-center justify-content-center pb-2">
+                <h2 set:html={careerdata.acf.heading_positions} />
+            </div>
+        </div>
+        <div class="row">
+            {careerdata.acf.positions.map((positionItem, index) => (
+                <div class="col-sm-6 col-md-4 col-lg-4 mb-3">
+                    <div class="card text-center" key={index}>
+                        <button class="position-btn btn btn-light btn-lg ps-4 pe-4 shadow" type="button" data-bs-toggle="modal" data-bs-target={`#staticBackdrop${index}`} set:html={positionItem.position_name}></button>
+                    </div>
+                </div>
+
+                <div class="modal fade" id={`staticBackdrop${index}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-12 d-flex flex-column align-items-start justify-content-center pb-4">
+                                            <h2 set:html={positionItem.position_name} />
+                                            <div class="position-details" set:html={positionItem.position_details} />               
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>   
+              ))}
+        </div>
+
+        <div class="row pt-5">
+            <div class="col-12 col-md-8 d-flex flex-column align-items-start justify-content-center pb-2">
+                <div set:html={careerdata.acf.open_position_descriptions} />   
+            </div>
+            <div class="col-12 col-md-4 d-flex flex-column align-items-center justify-content-start pb-2">
+                <a class="btn btn-primary btn-lg ps-5 pe-5" type="button" href={careerdata.acf.cta_button_url} set:html={careerdata.acf.cta_button_label} />
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="locations pb-0 read-aloud">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12 d-flex flex-column align-items-start justify-content-center pb-2">
+                <h2 set:html={careerdata.acf.heading_fifth} />
+            </div>
+        </div>
+        <div class="row pb-3">
+            <div class="col-12 d-flex flex-row align-items-start justify-content-flex-start pb-2 flex-wrap gap-3">
+            {careerdata.acf.location_info.map((locationItem, index) => (
+                <button type="button" class="slide-button btn btn-light btn-md shadow fw-medium ps-4 pe-4" data-slide-index={index} set:html={locationItem.location_name} />
+
+            ))}
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="swiper locationSwiper">
+                <div class="swiper-wrapper">
+                  {careerdata.acf.location_info.map((locationItem, index) => (
+                    <div class="swiper-slide" key={index}>
+                        <div class="row ps-3">
+                            <div class="col-12 col-md-6 col-lg-3 pe-3">
+                                <img 
+                                    class="shadow rounded"
+                                    src={locationItem.location_image}
+                                    width="318"
+                                    height="256"
+                                    alt={locationItem.location_name}
+                                />
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6 pe-5 pt-5 pt-lg-0">
+                                <h2 class="slideTitle pb-3 fw-medium" set:html={locationItem.location_name} />
+                                <div class="slideDescr" set:html={locationItem.location_details} />
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-3">
+                                <h2 class="slideTitle pb-3 fw-medium">Address</h2>
+                                <div class="slideDescr" set:html={locationItem.location_address} />
+                            </div>
+                        </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+        </div>
+    </div>
+</section>
+
+<style is:global>
+
+    .Careers .footer-cta {
+        display: none!important;;
+    }
+    .careers-hero article p {
+        padding: 40px 0;
+    }
+    .careers-hero .employee-info {
+        position: relative;
+    }
+    .careers-hero .employee-info::before {
+        content: '';
+        position: absolute;
+    }
+
+    .careers-perks .card-body {
+        padding: 0;
+    }
+    .swiper {
+        width: 100%;
+        height: 100%;
+        padding-top: 20px;
+    }
+
+  .careerSwiper .swiper-slide,
+  .locationSwiper .swiper-slide {
+      text-align: center;
+      background: linear-gradient(to bottom, #ffffff, #eeeded);
+      background: -webkit-linear-gradient(top, #ffffff, #eeeded);
+      background: -moz-linear-gradient(top, #ffffff, #eeeded);
+      background: -ms-linear-gradient(top, #ffffff, #eeeded);
+      background: -o-linear-gradient(top, #ffffff, #eeeded);
+      background: #EBECF0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 50px 25px;
+      border-radius: 30px;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+      margin-bottom: 80px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .locationSwiper .swiper-slide {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 50px 0 0;
+    }
+
+    .locationSwiper .swiper-slide:hover,
+    .careerSwiper .swiper-slide:hover {
+      transform: translate(0%, -5%);
+    }
+
+    .locationSwiper .swiper-slide:hover {
+        transform: translate(0%, 0%);
+    }
+
+  .careerSwiper .slideTitle,
+  .locationSwiper .slideTitle {
+      font-size: 24px;
+      font-weight: 600;
+      color: #000;
+      padding-bottom: 15px;
+    }
+  .careerSwiper .slideDescr,
+  .locationSwiper .slideDescr {
+      border-top: 2px solid #009345;
+      padding-top: 40px;
+      line-height: 28px;
+      font-size: 16px;
+    }
+
+    .locationSwiper .slideDescr {
+        padding-top: 0;
+    }
+
+    .locationSwiper .slideTitle,
+    .locationSwiper .slideDescr {
+        border-top: 0;
+        text-align: left;
+    }
+
+    .position-details {
+        column-count: 2;
+        column-gap: 50px;   
+    }
+    @media (max-width: 991px) {
+        .position-details {
+            column-count: 1;
+        }
+    }
+
+    .position-details p,
+    .position-details li {
+        font-size: 16px;
+        line-height: 25px;
+    }
+    .position-details ul,
+    .position-details ol {
+        list-style-position: inside;
+        padding-left: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .position-details ul li,
+    .position-details ol li {
+        list-style-position: outside;
+    }
+    .position-details ul li {
+        list-style: disc;
+    }
+    .position-details ol li {
+        list-style: decimal;
+    }
+
+    .careers-positions h2 {
+        padding-bottom: 10px;
+    }
+    .position-details h3 {
+        font-size: 22px;
+        font-weight: 400;
+    }
+    .careers-positions .modal-header {
+        border-bottom: 0;
+        padding-bottom: 0;
+    }
+    .position-btn {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .locations .active,
+    .locations .slide-button:hover {
+        background-color: #3E3984;
+        color: #fff;
+        box-shadow: none;
+    }
+</style>
+
+<script type="text/partytown" src="https://unpkg.com/swiper@11.0.5/swiper-bundle.min.js"></script>
+
+<!-- <script src="../scripts/swiper-bundle.min.js"></script> -->
+
+<script type="text/partytown">
+  const careerSwiper = new Swiper(".careerSwiper", {
+    slidesPerView: 3,
+    spaceBetween: 20,
+    //loop: true,
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 20
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 30
+      },
+      1200: {
+        slidesPerView: 3,
+        spaceBetween: 40
+      }
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    // autoplay: {
+    //   delay: 4500,
+    //   disableOnInteraction: false,
+    // },
+  });
+</script>
+
+<script type="text/partytown">
+    const locationSwiper = new Swiper(".locationSwiper", {
+      slidesPerView: 1,
+      spaceBetween: 0,
+    });
+
+    // Add event listener for slide change
+    locationSwiper.on('slideChange', function () {
+      // Get the current active slide index
+      var activeIndex = locationSwiper.activeIndex;
+
+      // Remove the 'active' class from all buttons
+      document.querySelectorAll('.slide-button').forEach(function(button) {
+        button.classList.remove('active');
+      });
+
+      // Add the 'active' class to the button corresponding to the active slide
+      document.querySelector('.slide-button[data-slide-index="' + activeIndex + '"]').classList.add('active');
+    });
+
+    document.querySelectorAll('.slide-button').forEach(function(button) {
+      button.addEventListener('click', function() {
+        // Get the data-slide-index attribute from the button
+        var slideIndex = parseInt(button.getAttribute('data-slide-index'), 10);
+        // Use the Swiper API to go to the specified slide
+        locationSwiper.slideTo(slideIndex);
+      });
+    });
+
+    // Add 'active' class to the first button initially
+    document.querySelector('.slide-button[data-slide-index="0"]').classList.add('active');
+
+  </script>

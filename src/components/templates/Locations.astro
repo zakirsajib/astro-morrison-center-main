@@ -1,0 +1,152 @@
+---
+import { Image } from 'astro:assets';
+import mapPin from '../../img/map-pin.svg';
+import phoneAlt from '../../img/phone-alt.svg';
+const { locationsdata } = Astro.props;
+---
+
+
+<section class="contact-hero pb-100 mt-md read-aloud">
+    <div class="container px-5">
+        <div class="row">
+            <div class="col-12 d-flex flex-column align-items-start justify-content-start">
+                <h1 class="mb-5" set:html={locationsdata.title.rendered} />
+                <p set:html={locationsdata.acf.sub_heading} />
+                <div class="d-flex align-items-start flex-column flex-lg-row">
+                    
+                    <div class="nav flex-column col-12 col-lg-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+                        <p class="text-center fw-medium mb-5 lh-sm" set:html={locationsdata.acf.heading} />
+                        
+                        {locationsdata.acf.location_details.map((locationItem, index) => (   
+
+                            <button 
+                                class="nav-link btn-light btn-md shadow fw-medium mb-3" 
+                                id={`v-pills-${index}-tab`} 
+                                data-bs-toggle="pill" 
+                                data-bs-target={`#v-pills-${index}`} 
+                                type="button" 
+                                role="tab" 
+                                aria-controls={`v-pills-${index}`} 
+                                aria-selected="true" 
+                                key={index}
+                            >
+                            {locationItem.location_name}
+                            </button>
+
+                        ))}
+                      
+                    </div>
+                    <div class="tab-content pt-5 pt-lg-0 col-12 col-lg-9 ms-0 ms-lg-5" id="v-pills-tabContent">
+                        {locationsdata.acf.location_details.map((locationItem, index) => ( 
+                            <div 
+                                class="tab-pane fade" 
+                                id={`v-pills-${index}`} 
+                                role="tabpanel" 
+                                aria-labelledby={`v-pills-${index}-tab`} 
+                                tabindex="0"
+                            >
+                                <div class="row ps-0 ps-lg-5">
+                                    <div class="col-12">
+                                        {/* <div class="morris-primary fw-medium" set:html={locationItem.location_name} />*/}
+                                        <img 
+                                            class="rounded-4 w-100 mb-3"
+                                            src={locationItem.location_image} 
+                                            alt={locationItem.location_name}
+                                            width="768"
+                                            height="222"
+                                        />
+                                        <div class="hstack gap-3">
+                                            <div class="p-2 fw-semibold">
+                                                <a 
+                                                    class="message-us" 
+                                                    href={locationItem.message_us}
+                                                >Message Us
+                                                </a>
+                                            </div>
+                                            <div class="p-2 ms-auto morris-primary fw-semibold">
+                                                <a 
+                                                href={`tel:${locationItem.call_us}`}
+                                                >
+                                                <Image 
+                                                src={phoneAlt} 
+                                                width="22" 
+                                                height="22" 
+                                                alt="" 
+                                                /> Call Us
+                                                </a>
+                                            </div>
+                                            <div class="p-2 morris-primary fw-semibold">
+                                                <a 
+                                                href={locationItem.find_us} target="_blank"
+                                                ><Image 
+                                                src={mapPin} 
+                                                width="12" 
+                                                height="22" 
+                                                alt="" 
+                                                /> Find Us
+                                                </a>
+                                            </div>
+                                        </div>   
+                                        
+                                        <div 
+                                        data-secure-form="nowprograms-secure-contact-form" data-secure-form-transparent-background="true"
+                                        ></div>
+                                        <script is:inline src="https://hushforms.com/f/public/javascript/embed-hush-form.js"></script>
+
+
+                                    </div>
+                                                                       
+                                </div>
+                            </div>
+                        ))}  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .morris-primary {
+        font-size: 24px;
+    }
+    .message-us:hover {
+        border-bottom: 1px solid #009345;
+        display: block;
+    }
+    .location-details,
+    .location-details a {
+        color: #262261;
+    }
+    button {
+        color: #262261;
+        background-color: #fff;
+    }
+    button.active {
+        border-radius: 0;
+        box-shadow: none!important;
+        background-color: transparent;
+    }
+    .nav-link {
+        padding-top: 0.2em;
+        padding-bottom: 0.2em;
+    }
+    .location-img {
+        width: 100%;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Select the first button and tab-content
+        const firstButton = document.querySelector(".nav-link");
+        const firstTabContent = document.querySelector(".tab-pane");
+
+        // Add the "active" class to the first button and tab-content
+        if (firstButton && firstTabContent) {
+            firstButton.classList.add("active");
+            firstTabContent.classList.add("show", "active");
+        }
+    });
+</script>

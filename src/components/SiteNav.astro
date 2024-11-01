@@ -1,0 +1,183 @@
+---
+import { Image } from 'astro:assets';
+import Hamburger from '../img/hamburger.svg';
+import MLogo from '../img/morris-logo.svg';
+const {menu, generalSettings} = Astro.props;
+
+const SITE_LOGO_EP = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/wp/v2/media/119`;
+
+const res = await fetch(SITE_LOGO_EP);
+const logoData = await res.json();
+
+const pathname = new URL(Astro.request.url).pathname;
+export {logoData};
+---
+
+<header class="sticky-top" id="top">
+  <div class="top-header">
+    <div class="container">
+      <div class="d-flex align-items-center navbar-expand-lg">
+        <div class="col col-lg-5 d-none d-lg-block"><a id="accSettings" class="fw-normal" href="#ae_launcher"></a>
+          <a href="#"><Image id="scrollLogo" class="logoMorrison" src={MLogo} width="40" height="40" alt="The Morris Center"></a>
+        </div>
+        <div class="col col-lg-7">
+          <div class="row">
+            <div id="freeConsultation" class="col text-center text-lg-start"><a onclick="Calendly.showPopupWidget('https://calendly.com/now-tmc-intake/free-consultation-tmc');return false;" class="fw-bold" >FREE CONSULTATION</a></div>
+            <div id="showMenu" class="col text-center text-lg-start"><a href="#" class="fw-bold" onclick="scrollToTop(event)">MENU <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-up" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708z"/>
+              <path fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708z"/>
+            </svg></a></div>
+            <div class="col text-end d-none d-lg-block"><div id="ra-player" data-skin="https://assets.readaloudwidget.com/embed/skins/default"><div class="ra-button" onclick="readAloud(document.getElementById('ra-audio'), document.getElementById('ra-player'))"><svg viewBox="0 0 80 100"><polygon points="80,50 0,100 0,0 80,50" fill="#484848"/></svg> Click to Listen</div></div></div>
+            
+            <div class="col col-lg-3 text-center"><a class="fw-normal" href="tel:+9048342482">904-834-2482</a></div>
+        </div>
+      </div>
+    </div>  
+    </div>
+    </div>
+    
+  </div>
+</header>
+<div class="container">  
+  <div class="header-menu navbar navbar-expand-lg d-flex justify-content-between">
+    <div class="logoMorrison d-flex align-items-center mt-3 mb-3 mb-md-0 me-md-auto text-decoration-none">
+      <a aria-label="Logo Morrison Center" href="/" class="text-chicle site-name"><img class="logoMorrison" src={logoData.media_details.sizes.full.source_url} width={logoData.media_details.sizes.full.width} height={logoData.media_details.sizes.full.height} alt={generalSettings.title}></a>
+    </div>
+    <!-- <div class="hamburger">&#9776;</div> -->
+    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+      {/*<span class="navbar-toggler-icon"></span>*/}
+      <Image src={Hamburger} width="59" height="24" alt="Morris Center Mobile icon"/>
+    </button>
+    <nav class="mainMenu navbar-collapse collapse" id="navbarsExample09">
+      
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {menu.menuItems.nodes.map((menuItem, index) => (
+          <li key={index}>
+            <a class={pathname === menuItem.uri ? "current-menu" : ""} href={menuItem.uri || '/'}>{menuItem.label}</a>
+            {menuItem.childItems.nodes.length > 0 && (
+              <ul class="subMenu">
+                {menuItem.childItems.nodes.map((childItem, childIndex) => (
+                  <li key={childIndex}>
+                    <a class={pathname === childItem.uri ? "current-menu" : ""} href={childItem.uri || '/'}>{childItem.label}</a>
+                    {/* {childItem.childItems.nodes.length > 0 && (
+                      <ul class="subSubMenu">
+                        {childItem.childItems.nodes.map((childItem, childIndex) => (
+                          <li key={childIndex}>
+                            <a class={pathname === childItem.uri ? "current-menu" : ""} href={childItem.uri || '/'}>{childItem.label}</a>
+                            
+                          </li> 
+                          ))} 
+                      </ul>
+                    )} */}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+        
+        </ul>
+    </nav>
+  </div>
+
+  <style>.ra-button {padding: .3em .9em; border-radius: .25em; background: linear-gradient(#fff, #efefef); box-shadow: 0 1px .2em gray; display: inline-flex; align-items: center; cursor: pointer; font-size: 14px;} .ra-button svg {height: 1em; margin: 0 .5em 0 0;}</style>
+
+<style>
+    #accSettings,
+    #showMenu,
+    #scrollLogo {
+      display: none;
+    }
+      
+    .current-menu {
+      color: #262261;
+    }
+    .top-header {
+      background-color: #262261;
+      padding-top: 5px;
+      padding-bottom: 5px; 
+    }
+    .top-header a {
+      color: var(--bs-white);
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .header-menu {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar-collapse {
+      flex-grow: unset;
+    }
+
+    @media (max-width: 1199px) {
+      .top-header a {
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 990px) {
+      .current-menu {
+        color: #009345;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .logoMorrison img {
+        max-width: 60%;
+      }
+    }
+
+    /* @media (max-width: 990px) {
+      .top-header {
+        display: none;
+      }
+    } */
+</style>
+
+<script>
+  function toggleMenuVisibility() {
+    if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
+      //document.getElementById("accSettings").style.display = "none";
+      document.getElementById("showMenu").style.display = "block";
+      document.getElementById("scrollLogo").style.display = "block";
+    } else {
+      //document.getElementById("accSettings").style.display = "block";
+      document.getElementById("showMenu").style.display = "none";
+      document.getElementById("scrollLogo").style.display = "none";
+    }
+  }
+
+  function scrollToTop(event) {
+    event.preventDefault(); // Prevent default behavior of the link
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
+
+  // Add event listener for the resize event
+  window.addEventListener("resize", function() {
+    // Check if viewport width is less than or equal to 992px
+    if (window.innerWidth >= 992) {
+      window.addEventListener("scroll", toggleMenuVisibility);
+    } else {
+      window.removeEventListener("scroll", toggleMenuVisibility);
+    }
+  });
+
+  // Add event listener for the resize event
+  window.addEventListener("resize", function() {
+    if (window.innerWidth < 992) {
+      document.getElementById("showMenu").style.display = "none";
+      document.getElementById("scrollLogo").style.display = "none";
+      //document.getElementById("freeConsultation").style.display = "block";
+    } else {
+      window.addEventListener("scroll", toggleMenuVisibility);
+    }
+  });
+
+  // Trigger the initial check when the page loads
+  window.dispatchEvent(new Event("resize"));
+</script>

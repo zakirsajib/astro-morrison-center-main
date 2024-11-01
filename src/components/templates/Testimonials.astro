@@ -1,0 +1,209 @@
+---
+import Faqs from '../Faq.astro';
+const { testidata, faqdata, fredata } = Astro.props;
+
+---
+
+<section class="testimonials-hero mt-md read-aloud">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-start justify-content-center">
+                <h1 set:html={testidata.acf.hero_title} />
+                <article 
+                    class="py-4 w-75" 
+                    set:html={testidata.acf.left_column} 
+                />
+            </div>
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-end justify-content-end pt-0">
+                <div class="slideRight">
+                    <article 
+                        class="pt-0" 
+                        set:html={testidata.acf.right_column} 
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials-video mt-md read-aloud">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            {testidata.acf.testimonials_video.map((tvideoItem, index) => (
+                <div class="col-sm-12 col-md-6 col-lg-4 mb-0 mb-md-3">
+                    <div class="card pb-1" key={index}>
+                        <div class="card-body">  
+                            <div class="slideRight">
+                                <article 
+                                    class="pt-0" 
+                                    set:html={tvideoItem.testimonial_video} 
+                                />
+                            </div>
+                            <h3 class="card-title fs-5 lh-sm pt-5 pb-3 fw-bolder" set:html={tvideoItem.testimonial_title} />
+                            <p class="card-text" set:html={tvideoItem.testimonials_description} />
+                        </div>
+                    </div>
+                </div> 
+            ))}
+        </div>
+    </div>
+</section>
+ 
+<section class="testimonials-before-after pb-50 mt-md mb-5 read-aloud">
+    <div class="container">
+        <div class="row mb-3">
+            <div class="d-flex gap-3 align-items-center flex-nowrap">
+                <img 
+                    src={testidata.acf.heading_logo} 
+                    alt="/"
+                    width="65"
+                    height="61"
+                />
+                <h2 set:html={testidata.acf.heading_third_section} />
+            </div>
+        </div>
+        <div class="row">
+            {testidata.acf.before_after.map((beforeafterItem, index) => (
+                <div class="col-12 col-md-6 col-lg-4 pe-3 mb-4" key={index}>
+                    {beforeafterItem.video_or_texts_before === 'Yes' ? (
+                        <div class="slideRight">
+                            <article 
+                                class="pt-0 pb-0 pt-md-5 pb-md-5" 
+                                set:html={beforeafterItem.before_video} 
+                            />
+                            <div class="overflow-blue hide-element">
+                                <h3>Before</h3>
+                            </div>
+                        </div>
+                    ): beforeafterItem.video_or_texts_before === 'No' ?  (  
+                        <article 
+                            class="pt-0 pb-0 pt-md-5 pb-md-5" 
+                            set:html={beforeafterItem.before_video} 
+                        />
+                    ): null }   
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 pe-3 mb-4">
+                    {beforeafterItem.video_or_texts_after === 'Yes' ? (
+                        <div class="slideRight">
+                            <article 
+                                class="pt-0 pb-0 pt-md-5 pb-md-5" 
+                                set:html={beforeafterItem.after_video} 
+                            />
+                            <div class="overflow-blue hide-element">
+                                <h3>After</h3>
+                            </div>
+                        </div>
+                    ): beforeafterItem.video_or_texts_after === 'No' ?  (
+                        <article 
+                            class="pt-0 pb-0 pt-md-5 pb-md-5" 
+                            set:html={beforeafterItem.after_video} 
+                        />
+                    ): null }
+                </div>
+                <div class="col-12 col-md-12 col-lg-4 pe-3 mb-4">
+                    <article 
+                        class="pt-0 pb-0 pt-md-5 pb-md-5" 
+                        set:html={beforeafterItem.before_after_information} 
+                    />
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<section class="further-research pb-50 mt-md mt-md-0 read-aloud">
+    <div class="container">
+        <div class="row ps-3 pe-3 ps-sm-0 pe-sm-0">
+            <div class="d-flex gap-3 align-items-center flex-nowrap mb-3">
+                <img 
+                    src={testidata.acf.heading_logo_fourth_section} 
+                    alt="/"
+                    width="65"
+                    height="61"
+                />
+                <h2 set:html={testidata.acf.heading_feedback} />
+            </div>
+        </div>
+        <div class="row ps-3 pe-3 ps-sm-0 pe-sm-0">
+            {testidata.acf.feedback.map((feedbackItem, index) => (
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="card pe-5" key={index}>
+                        <div class="card-body">  
+                            <div class="research-title lh-sm">
+                                <a 
+                                    class="card-link" 
+                                    href={feedbackItem.feedback_link} target="_blank">{feedbackItem.feedback_title}
+                                </a>
+                            </div>
+                            <div>
+                                <a 
+                                class="btn btn-primary btn-md mt-3 mb-3" type="button" 
+                                target="_blank" 
+                                href={feedbackItem.feedback_link}>View <span>Article</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+{/* 
+<section class="about-fifth pb-100 mt-md read-aloud">
+    <div class="container ps-4 pe-4">
+        <div class="row">
+            <div class="col-12 pb-5">
+                <h2 set:html={faqdata.acf.faq_titleheading} />
+                <Faqs></Faqs>
+            </div>
+        </div>
+    </div>
+</section>
+*/}
+<style is:global>
+    .slideRight {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%;
+    }
+    .slideRight iframe {
+        border-radius: 30px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .testimonials-hero a {
+        border-bottom: 2px solid #009345;
+    }
+    .testimonials-video .card {
+        padding: 0;
+    }
+    .overflow-blue {
+        z-index: 100;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(32,28,94,.6);
+        display: table-cell;
+        padding: 25% 0;
+        text-align: center;
+        border-radius: 30px;
+    }
+    .overflow-blue h3 {
+        color: #fff;
+    }
+    .slideRight:hover .hide-element {
+        display: none;
+    }
+
+    .testimonials-before-after h2 {
+        padding-bottom: 0;
+    }
+</style>

@@ -1,0 +1,190 @@
+---
+import CookieConsent from "../components/CookieConsent.astro";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
+import '../styles/global.css';
+import SiteNav from "../components/SiteNav.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import BackToTop from "../components/BackToTop.astro";
+import { navQuery } from "../lib/api";
+const { menus, generalSettings } = await navQuery();
+const primaryMenu = menus.nodes[0];
+
+const currentPath = Astro.url.pathname;
+let API_URL, metaData, res;
+
+
+// if(currentPath === '/') {
+// 	//console.log('home page');
+// 	API_URL = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/rankmath/v1/getHead?url=https://astromorrison.wpenginepowered.com/home`;
+// } else {
+// 	//console.log(currentPath);
+// 	API_URL = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/rankmath/v1/getHead?url=https://astromorrison.wpenginepowered.com${currentPath}`;
+// }
+
+
+if (currentPath === '/') {
+    // For the home page, append `/home` to the base URL
+    API_URL = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/rankmath/v1/getHead?url=${import.meta.env.WORDPRESS_API_BASE_URL}/home`;
+} else {
+    // For other pages, append the current path to the base URL
+    API_URL = `${import.meta.env.WORDPRESS_API_BASE_URL}/wp-json/rankmath/v1/getHead?url=${import.meta.env.WORDPRESS_API_BASE_URL}${currentPath}`;
+}
+
+
+res = await fetch(API_URL);
+metaData = await res.json();	
+
+
+// Extract title using string manipulation
+const titleMatch = metaData.head.match(/<title>(.*?)<\/title>/);
+const metaTitle = titleMatch ? titleMatch[1] : "Title not found";
+
+// Extract meta description using string manipulation
+const metaDescriptionMatch = metaData.head.match(/<meta name="description" content="(.*?)"\/>/);
+const metaDescription = metaDescriptionMatch ? metaDescriptionMatch[1] : "Meta description not found";
+
+// Extract meta keywords using string manipulation
+const metaKeywordsMatch = metaData.head.match(/<meta\s+name="keywords"\s+content="(.*?)"\s*\/?>/);
+const metaKeywords = metaKeywordsMatch ? metaKeywordsMatch[1] : "Meta Keywords not found";
+
+
+// Open Graph
+const metaOGLocaleMatch = metaData.head.match(/<meta property="og:locale" content="([^"]*)" \/>/);
+const metaOGLocale = metaOGLocaleMatch ? metaOGLocaleMatch[1] : "Meta Property:Locale not found";
+
+const metaOGTypeMatch = metaData.head.match(/<meta property="og:type" content="([^"]*)" \/>/);
+const metaOGType = metaOGTypeMatch ? metaOGTypeMatch[1] : "Meta Property:Type not found";
+
+const metaOGTitleMatch = metaData.head.match(/<meta property="og:title" content="([^"]*)" \/>/);
+const metaOGTitle = metaOGTitleMatch ? metaOGTitleMatch[1] : "Meta Property:Title not found";
+
+const metaOGDescrMatch = metaData.head.match(/<meta property="og:description" content="([^"]*)" \/>/);
+const metaOGDescr = metaOGDescrMatch ? metaOGDescrMatch[1] : "Meta Property:Description not found";
+
+const metaOGSiteNameMatch = metaData.head.match(/<meta property="og:site_name" content="([^"]*)" \/>/);
+const metaOGSiteName = metaOGSiteNameMatch ? metaOGSiteNameMatch[1] : "Meta Property:Site Name not found";
+
+const metaOGupdated_timeMatch = metaData.head.match(/<meta property="og:updated_time" content="([^"]*)" \/>/);
+const metaOGupdated_time = metaOGupdated_timeMatch ? metaOGupdated_timeMatch[1] : "Meta Property:Updated Time not found";
+
+const metaOGImageMatch = metaData.head.match(/<meta property="og:image" content="([^"]*)" \/>/);
+const metaOGImage = metaOGImageMatch ? metaOGImageMatch[1] : "Meta Property:Image not found";
+
+const metaOGSecureImageMatch = metaData.head.match(/<meta property="og:image:secure_url" content="([^"]*)" \/>/);
+const metaOGSecureImage = metaOGSecureImageMatch ? metaOGSecureImageMatch[1] : "Meta Property:Secure Image not found";
+
+const metaOGWidthMatch = metaData.head.match(/<meta property="og:image:width" content="([^"]*)" \/>/);
+const metaOGWidth = metaOGWidthMatch ? metaOGWidthMatch[1] : "Meta Property:Width not found";
+
+const metaOGHeightMatch = metaData.head.match(/<meta property="og:image:height" content="([^"]*)" \/>/);
+const metaOGHeight = metaOGHeightMatch ? metaOGHeightMatch[1] : "Meta Property:Height not found";
+
+const metaOGAltMatch = metaData.head.match(/<meta property="og:image:alt" content="([^"]*)" \/>/);
+const metaOGAlt = metaOGAltMatch ? metaOGAltMatch[1] : "Meta Property:Alt not found";
+
+const metaOGImgTypeMatch = metaData.head.match(/<meta property="og:image:type" content="([^"]*)" \/>/);
+const metaOGImgType = metaOGImgTypeMatch ? metaOGImgTypeMatch[1] : "Meta Property:Image Type not found";
+
+// Article
+const metaPubTimeMatch = metaData.head.match(/<meta property="article:published_time" content="([^"]*)" \/>/);
+const metaPubTime = metaPubTimeMatch ? metaPubTimeMatch[1] : "Meta Property:published_time not found";
+
+const metaModTimeMatch = metaData.head.match(/<meta property="article:modified_time" content="([^"]*)" \/>/);
+const metaModTime = metaModTimeMatch ? metaModTimeMatch[1] : "Meta Property:modified_time not found";
+
+// Twitter
+
+const metaTwtCardMatch = metaData.head.match(/<meta name="twitter:card" content="([^"]*)" \/>/);
+const metaTwtCard = metaTwtCardMatch ? metaTwtCardMatch[1] : "Meta Name:twitter:card not found";
+
+const metaTwtTitleMatch = metaData.head.match(/<meta name="twitter:title" content="([^"]*)" \/>/);
+const metaTwtTitle = metaTwtTitleMatch ? metaTwtTitleMatch[1] : "Meta Name:twitter:title not found";
+
+const metaTwtDescrMatch = metaData.head.match(/<meta name="twitter:description" content="([^"]*)" \/>/);
+const metaTwtDescr = metaTwtDescrMatch ? metaTwtDescrMatch[1] : "Meta Name:twitter:description not found";
+
+const metaTwtImageMatch = metaData.head.match(/<meta name="twitter:image" content="([^"]*)" \/>/);
+const metaTwtImg = metaTwtImageMatch ? metaTwtImageMatch[1] : "Meta Name:twitter:image not found";
+
+const metaTwtLabelMatch = metaData.head.match(/<meta name="twitter:label1" content="([^"]*)" \/>/);
+const metaTwtLabel = metaTwtLabelMatch ? metaTwtLabelMatch[1] : "Meta Name:twitter:label1 not found";
+
+const metaTwtDataMatch = metaData.head.match(/<meta name="twitter:data1" content="([^"]*)" \/>/);
+const metaTwtData = metaTwtDataMatch ? metaTwtDataMatch[1] : "Meta Name:twitter:data1 not found";
+
+// Rank Math Schema
+// const metaRMJsonMatch = metaData.head.match(/<script type="application\/ld\+json" class="rank-math-schema-pro">([^<]*)<\/script>/);
+// const jsonData = metaRMJsonMatch ? metaRMJsonMatch[1].trim():null;
+// const metaRMJson = jsonData ? JSON.parse(jsonData) : null;
+// const jsonDataString = JSON.stringify(metaRMJson);
+
+//const pathname = new URL(Astro.request.url).pathname;
+
+const { title, description } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{metaTitle}</title>
+		<meta name="description" content={metaDescription}>
+		<meta name="keywords" content={metaKeywords}>
+		<meta name="robots" content="index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+		<link rel="canonical" href={Astro.url} />
+
+		<meta property="og:locale" content={metaOGLocale} />
+		<meta property="og:type" content={metaOGType} />
+		<meta property="og:title" content={metaOGTitle} />
+		<meta property="og:description" content={metaOGDescr} />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:site_name" content={metaOGSiteName} />
+		<meta property="og:updated_time" content={metaOGupdated_time} />
+		<meta property="og:image" content={metaOGImage} />
+		<meta property="og:image:secure_url" content={metaOGSecureImage} />
+		<meta property="og:image:width" content={metaOGWidth} />
+		<meta property="og:image:height" content={metaOGHeight} />
+		<meta property="og:image:alt" content={metaOGAlt} />
+		<meta property="og:image:type" content={metaOGImgType} />
+		<meta property="article:published_time" content={metaPubTime} />
+		<meta property="article:modified_time" content={metaModTime} />
+		<meta name="twitter:card" content={metaTwtCard} />
+		<meta name="twitter:title" content={metaTwtTitle} />
+		<meta name="twitter:description" content={metaTwtDescr} />
+		<meta name="twitter:image" content={metaTwtImg} />
+		<meta name="twitter:label1" content={metaTwtLabel} />
+		<meta name="twitter:data1" content={metaTwtData} />
+
+    	<!-- Google Tag Manager -->
+		<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-5DFZ25S3');</script>
+		<!-- End Google Tag Manager -->
+	
+		
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;300;500;600;700&display=swap">
+		</GoogleFontsOptimizer>
+
+		<!-- <script type="application/ld+json" set:html={jsonDataString}/> -->
+
+
+
+	</head>
+	<body class={`${title}`}>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5DFZ25S3"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		<SiteNav menu={primaryMenu} generalSettings={generalSettings}></SiteNav>
+		<slot></slot>
+		<SiteFooter></SiteFooter>
+		<BackToTop />
+		<CookieConsent />
+	</body>
+</html>
